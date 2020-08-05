@@ -5,6 +5,8 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'rhysd/vim-clang-format'
 Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
+Plug 'xavierd/clang_complete'
+Plug 'sakhnik/nvim-gdb'
 " A - for switching between source and header files
 Plug 'vim-scripts/a.vim'
 " ale - linter / autocompletion / formatter
@@ -24,14 +26,25 @@ Plug 'LucHermitte/local_vimrc'
 call plug#end()
 
 " ################ Plugin configs ################################
+" clang_complete
+" let g:clang_complete_loaded = 2
+let g:clang_close_preview = 1
+let g:clang_auto_select = 1
+let g:clang_complete_auto = 0
+let g:clang_library_path='/usr/lib64/libclang.so'
+let g:clang_snippets = 1
+let g:clang_snippets_engine = 'clang_complete'
+let g:clang_jumpto_back_key = '<C-[>'
+let g:clang_jumpto_declaration_key = '<C-]>'
+let g:clang_jumpto_declaration_in_preview_key = '<A-2>'
 
 " ALE - linter
-let g:ale_completion_enabled = 1
+let g:ale_completion_enabled = 0
 let g:ale_cpp_clang_executable = 'clang++'
 let g:ale_cpp_clangtidy_executable = 'clang-tidy'
 let g:ale_linters = {'cpp': ['clangtidy']}
-"let g:ale_cpp_clang_options = '-std=c++17 -O0 -Wextra -Wall -Wpedantic'
-let g:ale_cpp_clangtidy_checks = ['cppcoreguidelines-*']
+let g:ale_cpp_clang_options = '-std=c++17 -O0 -Wextra -Wall -Wpedantic'
+let g:ale_cpp_clangtidy_checks = ['cppcoreguidelines-*','clang-analyzer-*','modernize-*','performance-*']
 let g:ale_cpp_clangtidy_options = '-O0 -Wextra -Wall -Wpedantic'
 "let g:ale_cpp_cpplint_options = ''
 "let g:ale_cpp_gcc_options = ''
@@ -57,10 +70,6 @@ inoremap <A-f> <Esc>:ClangFormat<CR>
 " A - header / source jump
 nnoremap <A-1> :A<CR>
 inoremap <A-1> <ESC>:A<CR>a
-
-" file under cursor
-nnoremap <A-2> :IH<CR>
-inoremap <A-2> <ESC>:IH<CR>
 
 " enable AutoSave on Vim startup
 let g:auto_save = 1 
