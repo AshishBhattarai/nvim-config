@@ -34,7 +34,7 @@ let g:clang_complete_auto = 0
 let g:clang_library_path='/usr/lib64/libclang.so'
 let g:clang_snippets = 1
 let g:clang_snippets_engine = 'clang_complete'
-let g:clang_jumpto_back_key = '<C-[>'
+"let g:clang_jumpto_back_key = '<C-[>'
 let g:clang_jumpto_declaration_key = '<C-]>'
 let g:clang_jumpto_declaration_in_preview_key = '<A-2>'
 
