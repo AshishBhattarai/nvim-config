@@ -6,6 +6,7 @@ Plug 'rhysd/vim-clang-format'
 Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
 Plug 'xavierd/clang_complete'
+Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'sakhnik/nvim-gdb'
 " A - for switching between source and header files
 Plug 'vim-scripts/a.vim'
@@ -28,13 +29,12 @@ call plug#end()
 " ################ Plugin configs ################################
 " clang_complete
 " let g:clang_complete_loaded = 2
+let g:clang_complete_auto = 0
 let g:clang_close_preview = 1
 let g:clang_auto_select = 1
-let g:clang_complete_auto = 0
 let g:clang_library_path='/usr/lib64/libclang.so'
 let g:clang_snippets = 1
 let g:clang_snippets_engine = 'clang_complete'
-"let g:clang_jumpto_back_key = '<C-[>'
 let g:clang_jumpto_declaration_key = '<C-]>'
 let g:clang_jumpto_declaration_in_preview_key = '<A-2>'
 
