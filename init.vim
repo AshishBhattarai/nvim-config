@@ -5,7 +5,6 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'rhysd/vim-clang-format'
 Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
-Plug 'xavierd/clang_complete'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'sakhnik/nvim-gdb'
 " A - for switching between source and header files
@@ -24,19 +23,50 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " project local config
 Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
+" Comment shortcut
+Plug 'preservim/nerdcommenter'
+" Auto complete Language Server clangd
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+" Auto complete 
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Snippet
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 call plug#end()
 
 " ################ Plugin configs ################################
-" clang_complete
-" let g:clang_complete_loaded = 2
-let g:clang_complete_auto = 0
-let g:clang_close_preview = 1
-let g:clang_auto_select = 1
-let g:clang_library_path='/usr/lib64/libclang.so'
-let g:clang_snippets = 1
-let g:clang_snippets_engine = 'clang_complete'
-let g:clang_jumpto_declaration_key = '<C-]>'
-let g:clang_jumpto_declaration_in_preview_key = '<A-2>'
+" clangd auto complete
+let g:deoplete#enable_at_startup = 1
+"enable neovim-LanguageClient
+let g:LanguageClient_autoStart = 1
+"set clangd as server when it is C++
+let g:LanguageClient_serverCommands = {
+    \ 'cpp': ['clangd'],
+    \ }
+"set complete function for deoplete.vim
+set completefunc=LanguageClient#complete
+" manual complete
+let g:deoplete#disable_auto_complete = 1
+inoremap <silent><expr> <C-Space>
+\ pumvisible() ? "\<C-n>" :
+\ <SID>check_back_space() ? "\<TAB>" :
+\ deoplete#manual_complete()
+function! s:check_back_space() abort "{{{
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+" close popup
+inoremap <expr><C-h>
+\ deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>
+\ deoplete#smart_close_popup()."\<C-h>"
+" Snippet conifg
+imap <C-k>	<Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " ALE - linter
 let g:ale_completion_enabled = 0
