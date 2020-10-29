@@ -22,7 +22,6 @@ Plug 'junegunn/fzf'
 " colorscheme
 Plug 'sainnhe/gruvbox-material'
 Plug 'ayu-theme/ayu-vim'
-Plug 'octol/vim-cpp-enhanced-highlight'
 " project local config
 Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
@@ -30,9 +29,14 @@ Plug 'LucHermitte/local_vimrc'
 Plug 'preservim/nerdcommenter'
 " AutoComplete+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Semantic Highlight
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 call plug#end()
 
 " ################ Plugin configs ################################
+
+" vim-lsp-cxx-highlight
+let g:lsp_cxx_hl_use_text_props = 1
 
 " ALE - linter
 let g:ale_completion_enabled = 0
@@ -65,13 +69,6 @@ let g:auto_save_events = ["InsertLeave", "TextChanged"]
 
 " lightline
 let g:lightline = {'colorscheme' : 'gruvbox_material'}
-
-" cpp-syntax
-let g:cpp_posix_standard = 1
-let g:cpp_experimental_simple_template_highlight = 1
-" slow
-" let g:cpp_experimental_template_highlight = 1 
-" let g:cpp_concepts_highlight = 1
 
 " ################ Vim configs ################################
 set autoread
