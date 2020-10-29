@@ -12,8 +12,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
 " Dox generator
 Plug 'vim-scripts/DoxygenToolkit.vim'
-" A - for switching between source and header files
-Plug 'vim-scripts/a.vim'
 " ale - linter / autocompletion / formatter
 Plug 'AshishBhattarai/ale'
 " tabline theme
@@ -126,10 +124,11 @@ map <A-0> :NERDTreeToggle<CR>
 map <A-9> :NERDTreeFind<CR>
 
 " A - header / source jump
-nnoremap <A-1> :A<CR>
-inoremap <A-1> <ESC>:A<CR>a
+nnoremap <A-1> :CocCommand clangd.switchSourceHeader<CR>
+inoremap <A-1> :CocCommand clangd.switchSourceHeader<CR>
+nnoremap <A-2> :CocCommand clangd.symbolInfo<CR>
+inoremap <A-2> :CocCommand clangd.symbolInfo<CR>
 
 " clang-format
 autocmd FileType c,cpp,objc,frag,vert,glsl,geom nnoremap <A-f> <Esc>:ClangFormat<CR>
 autocmd FileType c,cpp,objc,frag,vert,glsl,geom inoremap <A-f> <Esc>:ClangFormat<CR>
-
