@@ -23,14 +23,26 @@ Plug 'junegunn/fzf'
 Plug 'sainnhe/gruvbox-material'
 Plug 'ayu-theme/ayu-vim'
 " project local config
-Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
+Plug 'LucHermitte/lh-vim-lib'
 " Comment shortcut
 Plug 'preservim/nerdcommenter'
 " AutoComplete+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Semantic Highlight
 Plug 'jackguo380/vim-lsp-cxx-highlight'
+" Surround
+Plug 'tpope/vim-surround'
+" Fast Fold
+Plug 'Konfekt/FastFold'
+" Better Fold
+Plug 'pseewald/vim-anyfold'
+" Get history and commit messages
+Plug 'rhysd/git-messenger.vim'
+" rust
+Plug 'rust-lang/rust.vim'
+" debugger
+Plug 'puremourning/vimspector'
 call plug#end()
 
 " ################ Plugin configs ################################
@@ -70,6 +82,7 @@ let g:auto_save_events = ["InsertLeave", "TextChanged"]
 " lightline
 let g:lightline = {'colorscheme' : 'gruvbox_material'}
 
+
 " ################ Vim configs ################################
 set autoread
 set shiftwidth=2
@@ -92,6 +105,11 @@ set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
 
 " copy from clipboard
 set clipboard=unnamedplus
+
+" any fold
+filetype plugin indent on
+autocmd Filetype * AnyFoldActivate               " activate for all filetypes
+set foldlevel=99
 
 " ################ KeyMaps ################################
 " Coc keymaps
@@ -120,11 +138,38 @@ imap <C-k> <Plug>(coc-snippets-expand-jump)
 map <A-0> :NERDTreeToggle<CR>
 map <A-9> :NERDTreeFind<CR>
 
-" A - header / source jump
+" header / source jump
 nnoremap <A-1> :CocCommand clangd.switchSourceHeader<CR>
 inoremap <A-1> :CocCommand clangd.switchSourceHeader<CR>
 nnoremap <A-2> :CocCommand clangd.symbolInfo<CR>
 inoremap <A-2> :CocCommand clangd.symbolInfo<CR>
+
+" auto pair budget
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
+
+" vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+nmap <leader>dd :call vimspector#Launch()<CR>
+nmap <leader>db :call vimspector#ToggleBreakpoint()<CR>
+nmap <leader>dx :VimspectorReset<CR>
+nmap <leader>de :VimspectorEval
+nmap <leader>dw :VimspectorWatch
+" nmap <leader>do :VimspectorShowOutput
+
+nmap <leader>ds :call vimspector#Stop()<CR>
+nmap <leader>dp :call vimspector#Pause()<CR>
+nmap <leader>dr :call vimspector#Restart()<CR>
+
+nmap <leader>dn :call vimspector#StepOver()<CR>
+nmap <leader>di :call vimspector#StepInto()<CR>
+nmap <leader>do :call vimspector#StepOut()<CR>
+
 
 " clang-format
 autocmd FileType c,cpp,objc,frag,vert,glsl,geom nnoremap <A-f> <Esc>:ClangFormat<CR>
