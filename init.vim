@@ -99,9 +99,12 @@ let ayucolor="dark"   " for dark version of theme
 colorscheme ayu
 
 " persistent undo
-silent !mkdir -p ~/.vim/undo
+silent !mkdir -p ~/.local/share/nvim/undo
+silent !mkdir -p ~/.local/share/nvim/swap
 set undofile                 "turn on the feature  
-set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
+set undodir=$HOME/.local/share/nvim/undo  "directory where the undo files will be stored
+set dir=$HOME/.local/share/nvim/swap
+set fsync " ;-; lost 2 files on poweroutage
 
 " copy from clipboard
 set clipboard=unnamedplus
@@ -169,7 +172,6 @@ nmap <leader>dr :call vimspector#Restart()<CR>
 nmap <leader>dn :call vimspector#StepOver()<CR>
 nmap <leader>di :call vimspector#StepInto()<CR>
 nmap <leader>do :call vimspector#StepOut()<CR>
-
 
 " clang-format
 autocmd FileType c,cpp,objc,frag,vert,glsl,geom nnoremap <A-f> <Esc>:ClangFormat<CR>
