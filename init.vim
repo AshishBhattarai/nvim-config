@@ -12,8 +12,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug '907th/vim-auto-save'
 " Dox generator
 Plug 'vim-scripts/DoxygenToolkit.vim'
-" ale - linter / autocompletion / formatter
-Plug 'AshishBhattarai/ale'
 " tabline theme
 Plug 'itchyny/lightline.vim'
 " fuzzy finder
@@ -49,17 +47,6 @@ call plug#end()
 
 " vim-lsp-cxx-highlight
 let g:lsp_cxx_hl_use_text_props = 1
-
-" ALE - linter
-let g:ale_completion_enabled = 0
-let g:ale_cpp_clangtidy_executable = 'clang-tidy'
-let g:ale_linters = {'cpp': ['clangtidy'], 'c': ['clangtidy']}
-let g:ale_cpp_clangtidy_checks = ['clang-analyzer-*','modernize-*','performance-*']
-let g:ale_cpp_clangtidy_options = '-std=c++20 -Wall -Wextra -Wpedantic -Wmove'
-"let g:ale_cpp_cpplint_options = ''
-"let g:ale_cpp_gcc_options = ''
-"let g:ale_cpp_clangcheck_options = ''
-"let g:ale_cpp_cppcheck_options = '--project=build/compile_commands.json --enable=all'
 
 " Clang format - auto formatting
 let g:clang_format#command = 'clang-format'
@@ -172,6 +159,8 @@ nmap <leader>dr :call vimspector#Restart()<CR>
 nmap <leader>dn :call vimspector#StepOver()<CR>
 nmap <leader>di :call vimspector#StepInto()<CR>
 nmap <leader>do :call vimspector#StepOut()<CR>
+nmap <leader>dc :call vimspector#Continue()<CR>
+
 
 " clang-format
 autocmd FileType c,cpp,objc,frag,vert,glsl,geom nnoremap <A-f> <Esc>:ClangFormat<CR>
