@@ -1,0 +1,42 @@
+-- setup nvim-tree
+require('nvim-tree').setup()
+
+-- ufo fold
+require('ufo').setup()
+
+-- setup nvim-treesitter
+require('nvim-treesitter.configs').setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "c", "javascript", "typescript", "rust" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    additional_vim_regex_highlighting = false,
+  },
+}
+
+-- autosave
+local autosave = require("autosave")
+
+autosave.setup(
+    {
+        enabled = true,
+        execution_message = "AutoSave: saved at " .. vim.fn.strftime("%H:%M:%S"),
+        events = {"FocusLost", "BufEnter", "InsertLeave"},
+        conditions = {
+            exists = true,
+            filename_is_not = {},
+            filetype_is_not = {},
+            modifiable = true
+        },
+        write_all_buffers = false,
+        on_off_commands = true,
+        clean_command_line_interval = 0,
+        debounce_delay = 135
+    }
+)
