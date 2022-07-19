@@ -46,9 +46,14 @@ let g:localvimrc_file_dir=".vim"
 " vim-lsp-cxx-highlight
 let g:lsp_cxx_hl_use_text_props = 1
 
-
 " lightline
 let g:lightline = {'colorscheme' : 'gruvbox_material'}
+
+" coc
+let g:coc_node_path=trim(system('which node'))
+
+" Float term config
+let g:floaterm_winblend = 30
 
 " ################ Vim configs ################################
 set autoread
@@ -84,9 +89,6 @@ set foldcolumn=1
 set foldenable
 
 " coc
-" Use gu to show documentation in preview window
-let g:coc_node_path=trim(system('which node'))
-
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -94,9 +96,6 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
-" Float term config
-let g:floaterm_winblend = 30
 
 " ################ KeyMaps ################################
 " Coc keymaps
@@ -125,6 +124,15 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 " NerdTree Keymaps
 map <A-0> :NvimTreeFindFileToggle<CR>
@@ -165,6 +173,9 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 
 " Esc to exit terminal insert mode
 tnoremap <esc> <C-\><C-N>
+
+nnoremap <A-p> :FzfLua files<CR>
+nnoremap <A-P> :FzfLua grep<CR>
 
 " Floatterm bindings
 let g:floaterm_keymap_new    = '<A-2>'
