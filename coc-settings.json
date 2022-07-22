@@ -1,7 +1,7 @@
-{ 
-  "suggest.autoTrigger" : "none", 
-  "diagnostic.enable" : true, 
+{
+  "suggest.autoTrigger": "none",
+  "diagnostic.enable": true,
   "diagnostic.virtualText": true,
   "codeLens.enable": true,
   "git.addGBlameToVirtualText": true
-  }
+}

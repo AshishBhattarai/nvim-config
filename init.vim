@@ -57,6 +57,9 @@ let g:coc_node_path=trim(system('which node'))
 " Float term config
 let g:floaterm_winblend = 30
 
+" vimspector
+let g:vimspector_base_dir=expand('$HOME/.config/nvim/vimspector-config')
+
 " ################ Vim configs ################################
 set autoread
 set shiftwidth=2
@@ -98,9 +101,6 @@ function! s:show_documentation()
     call CocAction('doHover')
   endif
 endfunction
-
-" vimspector
-let g:vimspector_base_dir=expand('$HOME/.config/nvim/vimspector-config')
 
 " ################ KeyMaps ################################
 " Coc keymaps
