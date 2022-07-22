@@ -36,6 +36,8 @@ Plug 'kyazdani42/nvim-web-devicons' " optional, for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 " FloatTerm
 Plug 'voldikss/vim-floaterm'
+" git
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
@@ -106,12 +108,12 @@ imap <C-k> <Plug>(coc-snippets-expand-jump)
 nnoremap <silent> gu :call <SID>show_documentation()<CR>
 nmap <silent> <C-]> <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> go <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " split jump
 nmap <silent> gs :call CocAction('jumpDefinition', 'split')<CR>
 nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
-nmap <silent> gt :call CocAction('jumpDefinition', 'tabe')<CR>
+nmap <silent> g. :call CocAction('jumpDefinition', 'tabe')<CR>
 
 inoremap <silent><expr> <C-space> coc#refresh()
 inoremap <silent><expr> <TAB>
@@ -125,6 +127,12 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" Overlay scroll
+nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocActionAsync('format')
 
@@ -136,7 +144,8 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 
 " NerdTree Keymaps
 map <A-0> :NvimTreeFindFileToggle<CR>
-map <A-9> :NvimTreeCollapse<CR>
+map <A-9> :NvimTreeFindFile<CR>
+map <A-8> :NvimTreeCollapse<CR>
 
 " auto pair budget
 inoremap " ""<left>
@@ -176,6 +185,7 @@ tnoremap <esc> <C-\><C-N>
 
 nnoremap <A-p> :FzfLua files<CR>
 nnoremap <A-P> :FzfLua grep<CR>
+nnoremap <A-f> :Format<CR>
 
 " Floatterm bindings
 let g:floaterm_keymap_new    = '<A-2>'
