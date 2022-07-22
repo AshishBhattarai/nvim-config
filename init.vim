@@ -99,6 +99,9 @@ function! s:show_documentation()
   endif
 endfunction
 
+" vimspector
+let g:vimspector_base_dir=expand('$HOME/.config/nvim/vimspector-config')
+
 " ################ KeyMaps ################################
 " Coc keymaps
 let g:coc_snippet_next = '<c-k>'
@@ -114,6 +117,9 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gs :call CocAction('jumpDefinition', 'split')<CR>
 nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
 nmap <silent> g. :call CocAction('jumpDefinition', 'tabe')<CR>
+
+" rename references
+nmap <silent>gn <Plug>(coc-rename)
 
 inoremap <silent><expr> <C-space> coc#refresh()
 inoremap <silent><expr> <TAB>

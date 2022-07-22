@@ -1,0 +1,20 @@
+{
+  "configurations": {
+    "express": {
+      "adapter": "vscode-node",
+      "breakpoints": {
+        "exception": {
+          "all": "N",
+          "uncaught": "N"
+        }
+      },
+      "configuration": {
+        "name": "Attaching to a process ID",
+        "type": "node",
+        "request": "attach",
+        "skipFiles": ["node_modules/**/*.js", "<node_internals>/**/*.js"],
+        "processId": "${processId}"
+      }
+    }
+  }
+}
