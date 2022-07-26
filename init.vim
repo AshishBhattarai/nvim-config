@@ -153,15 +153,6 @@ map <A-0> :NvimTreeFindFileToggle<CR>
 map <A-9> :NvimTreeFindFile<CR>
 map <A-8> :NvimTreeCollapse<CR>
 
-" auto pair budget
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
-
 " vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
 nmap <leader>dd :call vimspector#Launch()<CR>
@@ -187,7 +178,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 vnoremap <A-j> :m '>+1<CR>gv=gv
 
 " Esc to exit terminal insert mode
-tnoremap <esc> <C-\><C-N>
+tnoremap <S-esc> <C-\><C-N>
 
 nnoremap <A-p> :FzfLua files<CR>
 nnoremap <A-P> :FzfLua grep<CR>
