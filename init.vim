@@ -59,6 +59,7 @@ let g:floaterm_winblend = 30
 let g:vimspector_base_dir=expand('$HOME/.config/nvim/vimspector-config')
 
 " ################ Vim configs ################################
+set autowriteall
 set autoread
 set shiftwidth=2
 set colorcolumn=100
