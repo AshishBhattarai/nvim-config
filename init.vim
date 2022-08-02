@@ -2,8 +2,6 @@
 call plug#begin('~/.config/nvim/plugged')
 " Vim multi cursor
 Plug 'terryma/vim-multiple-cursors'
-" Auto save
-Plug 'Pocco81/AutoSave.nvim'
 " Dox generator
 Plug 'vim-scripts/DoxygenToolkit.vim'
 " tabline theme
@@ -104,8 +102,8 @@ endfunction
 
 " ################ KeyMaps ################################
 " Coc keymaps
-let g:coc_snippet_next = '<c-k>'
-let g:coc_snippet_prev = '<c-j>'
+let g:coc_snippet_next = '<C-k>'
+let g:coc_snippet_prev = '<C-j>'
 imap <C-k> <Plug>(coc-snippets-expand-jump)
 
 nnoremap <silent> gu :call <SID>show_documentation()<CR>
@@ -121,9 +119,11 @@ nmap <silent> g. :call CocAction('jumpDefinition', 'tabe')<CR>
 " rename references
 nmap <silent>gn <Plug>(coc-rename)
 
-inoremap <silent><expr> <C-space> coc#refresh()
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" use <tab> for trigger completion and select top option
+inoremap <silent><expr> <Tab>
+      \ coc#pum#visible() ? coc#_select_confirm() :
       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
