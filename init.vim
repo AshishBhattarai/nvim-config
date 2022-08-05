@@ -103,8 +103,8 @@ endfunction
 
 " ################ KeyMaps ################################
 " Coc keymaps
-let g:coc_snippet_next = '<C-k>'
-let g:coc_snippet_prev = '<C-j>'
+"let g:coc_snippet_next = '<C-k>'
+"let g:coc_snippet_prev = '<C-j>'
 imap <C-k> <Plug>(coc-snippets-expand-jump)
 
 nnoremap <silent> gu :call <SID>show_documentation()<CR>
@@ -120,7 +120,7 @@ nmap <silent> g. :call CocAction('jumpDefinition', 'tabe')<CR>
 " rename references
 nmap <silent>gn <Plug>(coc-rename)
 
-inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <C-i> coc#refresh()
 
 " use <tab> for trigger completion and select top option
 inoremap <silent><expr> <Tab>
@@ -133,6 +133,8 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+let g:coc_snippet_next = '<tab>'
 
 " Overlay scroll
 nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -183,6 +185,7 @@ tnoremap <S-esc> <C-\><C-N>
 
 nnoremap <A-p> :FzfLua files<CR>
 nnoremap <A-P> :FzfLua grep<CR>
+nnoremap <A-b> :FzfLua buffers<CR>
 nnoremap <A-f> :Format<CR>
 
 " Floatterm bindings
