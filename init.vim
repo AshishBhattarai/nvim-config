@@ -2,8 +2,6 @@
 call plug#begin('~/.config/nvim/plugged')
 " Vim multi cursor
 Plug 'terryma/vim-multiple-cursors'
-" Dox generator
-Plug 'vim-scripts/DoxygenToolkit.vim'
 " tabline theme
 Plug 'itchyny/lightline.vim'
 " fuzzy finder
@@ -18,7 +16,6 @@ Plug 'preservim/nerdcommenter'
 " AutoComplete+
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Semantic Highlight
-Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Surround
 Plug 'tpope/vim-surround'
@@ -36,6 +33,8 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'voldikss/vim-floaterm'
 " git
 Plug 'tpope/vim-fugitive'
+" auto save
+Plug 'Pocco81/auto-save.nvim'
 
 call plug#end()
 
