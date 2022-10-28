@@ -102,8 +102,8 @@ endfunction
 
 " ################ KeyMaps ################################
 " Coc keymaps
-"let g:coc_snippet_next = '<C-k>'
-"let g:coc_snippet_prev = '<C-j>'
+let g:coc_snippet_next = '<C-k>'
+let g:coc_snippet_prev = '<C-j>'
 imap <C-k> <Plug>(coc-snippets-expand-jump)
 
 nnoremap <silent> gu :call <SID>show_documentation()<CR>
@@ -122,18 +122,15 @@ nmap <silent>gn <Plug>(coc-rename)
 inoremap <silent><expr> <C-i> coc#refresh()
 
 " use <tab> for trigger completion and select top option
-inoremap <silent><expr> <Tab>
+inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ CheckBackSpace() ? "\<TAB>" :
       \ coc#refresh()
 
-function! s:check_back_space() abort
+function! CheckBackSpace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-let g:coc_snippet_next = '<tab>'
 
 " Overlay scroll
 nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"

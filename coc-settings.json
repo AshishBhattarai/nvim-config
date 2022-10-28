@@ -3,5 +3,6 @@
   "diagnostic.enable": true,
   "diagnostic.virtualText": true,
   "codeLens.enable": true,
-  "git.addGBlameToVirtualText": true
+  "git.addGBlameToVirtualText": true,
+  "snippets.priority": 50
 }
