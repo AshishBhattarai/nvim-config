@@ -35,6 +35,8 @@ Plug 'voldikss/vim-floaterm'
 Plug 'tpope/vim-fugitive'
 " auto save
 Plug 'Pocco81/auto-save.nvim'
+" Discord precense
+Plug 'andweeb/presence.nvim'
 
 call plug#end()
 
@@ -61,7 +63,7 @@ let g:vimspector_base_dir=expand('$HOME/.config/nvim/vimspector-config')
 set autowriteall
 set autoread
 set shiftwidth=2
-set colorcolumn=100
+set colorcolumn=120
 highlight colorcolumn ctermbg=8 guibg=lightorange
 
 set relativenumber
@@ -123,7 +125,7 @@ inoremap <silent><expr> <C-i> coc#refresh()
 
 " use <tab> for trigger completion and select top option
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#_select_confirm() :
+      \ coc#pum#visible() ? coc#pum#confirm() :
       \ CheckBackSpace() ? "\<TAB>" :
       \ coc#refresh()
 
@@ -189,6 +191,9 @@ let g:floaterm_keymap_new    = '<A-2>'
 let g:floaterm_keymap_prev   = '<A-3>'
 let g:floaterm_keymap_next   = '<A-4>'
 let g:floaterm_keymap_toggle = '<A-1>'
+
+:map <silent> <C-ScrollWheelUp> :ZoomIn<Enter>
+:map <silent> <C-ScrollWheelDown> :ZoomOut<Enter>
 
 " lua config
 lua require('config')
