@@ -36,7 +36,7 @@ Plug 'tpope/vim-fugitive'
 " auto save
 Plug 'Pocco81/auto-save.nvim'
 " Discord precense
-Plug 'andweeb/presence.nvim'
+" Plug 'andweeb/presence.nvim'
 
 call plug#end()
 
@@ -113,6 +113,7 @@ nmap <silent> <C-]> <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> go <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> ca <Plug>(coc-codeaction-cursor)
 " split jump
 nmap <silent> gs :call CocAction('jumpDefinition', 'split')<CR>
 nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
