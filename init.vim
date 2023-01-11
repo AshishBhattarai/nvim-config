@@ -5,7 +5,9 @@ Plug 'terryma/vim-multiple-cursors'
 " tabline theme
 Plug 'itchyny/lightline.vim'
 " fuzzy finder
-Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+" Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 " colorscheme
 Plug 'sainnhe/gruvbox-material'
 Plug 'ayu-theme/ayu-vim'
@@ -37,6 +39,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'Pocco81/auto-save.nvim'
 " Discord precense
 " Plug 'andweeb/presence.nvim'
+" Adds indentation guides to all lines
+Plug 'lukas-reineke/indent-blankline.nvim'
 
 call plug#end()
 
@@ -182,10 +186,20 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 " Esc to exit terminal insert mode
 tnoremap <S-esc> <C-\><C-N>
 
-nnoremap <A-p> :FzfLua files<CR>
-nnoremap <A-P> :FzfLua grep<CR>
-nnoremap <A-b> :FzfLua buffers<CR>
 nnoremap <A-f> :Format<CR>
+
+" Fzf
+" nnoremap <A-p> :FzfLua files<CR>
+" nnoremap <A-P> :FzfLua grep<CR>
+" nnoremap <A-b> :FzfLua buffers<CR>
+" Find files using Telescope command-line sugar.
+nnoremap <A-p> <cmd>Telescope find_files<cr>
+nnoremap <A-P> <cmd>Telescope live_grep<cr>
+nnoremap <A-b> <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" use treesitter for blankline
+let g:indent_blankline_use_treesitter = v:true
 
 " Floatterm bindings
 let g:floaterm_keymap_new    = '<A-2>'

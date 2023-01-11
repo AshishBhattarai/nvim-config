@@ -1,4 +1,10 @@
 local tree_cb = require'nvim-tree.config'.nvim_tree_callback
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
 
 require('nvim-tree').setup({
   view = {
@@ -24,8 +30,12 @@ require('nvim-treesitter.configs').setup {
   highlight = {
     -- `false` will disable the whole extension
     enable = true,
-
+    use_languagetree = true,
     additional_vim_regex_highlighting = false,
+  },
+
+  indent = {
+    enable = true,
   },
 }
 
@@ -57,3 +67,51 @@ require("auto-save").setup()
 --    line_number_text    = "Line %s out of %s",        -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
 --})
 
+-- blankline
+require("indent_blankline").setup {
+    indentLine_enabled = 1,
+    filetype_exclude = {
+      "help",
+      "terminal",
+      "alpha",
+      "packer",
+      "lspinfo",
+      "TelescopePrompt",
+      "TelescopeResults",
+      "mason",
+      "NvimTree",
+      ""
+    },
+    buftype_exclude = { "terminal" },
+    show_trailing_blankline_indent = true,
+    show_current_context = true,
+    show_current_context_start = true,
+    show_end_of_line = true,
+}
+
+-- telescope
+require('telescope').setup({
+  defaults = {
+  selection_strategy = "reset",
+  sorting_strategy = "ascending",
+  layout_strategy = "horizontal",
+  layout_config = {
+      horizontal = {
+        prompt_position = "top",
+        preview_width = 0.55,
+        results_width = 0.8,
+      },
+      vertical = {
+        mirror = false,
+      },
+      width = 0.87,
+      height = 0.80,
+      preview_cutoff = 120,
+    },
+      mappings = {
+	i = {
+	  ["<C-s>"] = "select_horizontal"
+	}
+    }
+  },
+})
