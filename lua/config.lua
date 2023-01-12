@@ -1,4 +1,3 @@
-local tree_cb = require'nvim-tree.config'.nvim_tree_callback
 -- disable netrw at the very start of your init.lua (strongly advised)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -10,7 +9,8 @@ require('nvim-tree').setup({
   view = {
     mappings = {
       list = {
-	{ key = "<C-s>", cb = tree_cb('split') }
+	{ key = "<C-s>", action = "split" },
+	{ key = "d", action = "trash" },
       }
     }
   }

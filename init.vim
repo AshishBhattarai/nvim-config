@@ -63,6 +63,9 @@ let g:floaterm_winblend = 30
 " vimspector
 let g:vimspector_base_dir=expand('$HOME/.config/nvim/vimspector-config')
 
+" use treesitter for blankline
+let g:indent_blankline_use_treesitter = v:true
+
 " ################ Vim configs ################################
 set autowriteall
 set autoread
@@ -197,9 +200,6 @@ nnoremap <A-p> <cmd>Telescope find_files<cr>
 nnoremap <A-P> <cmd>Telescope live_grep<cr>
 nnoremap <A-b> <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
-" use treesitter for blankline
-let g:indent_blankline_use_treesitter = v:true
 
 " Floatterm bindings
 let g:floaterm_keymap_new    = '<A-2>'
