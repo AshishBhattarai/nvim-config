@@ -207,8 +207,8 @@ let g:floaterm_keymap_prev   = '<A-3>'
 let g:floaterm_keymap_next   = '<A-4>'
 let g:floaterm_keymap_toggle = '<A-1>'
 
-:map <silent> <C-ScrollWheelUp> :ZoomIn<Enter>
-:map <silent> <C-ScrollWheelDown> :ZoomOut<Enter>
+" NERDCommenter
+let g:NERDCreateDefaultMappings = 1
 
 " lua config
 lua require('config')
