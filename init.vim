@@ -123,7 +123,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> ca <Plug>(coc-codeaction-cursor)
 " split jump
 nmap <silent> gs :call CocAction('jumpDefinition', 'split')<CR>
-nmap <silent> gd :call CocAction('jumpDefinition', 'vsplit')<CR>
+nmap <silent> gx :call CocAction('jumpDefinition', 'vsplit')<CR>
 nmap <silent> g. :call CocAction('jumpDefinition', 'tabe')<CR>
 
 " rename references
