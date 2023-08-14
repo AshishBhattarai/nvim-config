@@ -165,8 +165,9 @@ map <A-8> :NvimTreeCollapse<CR>
 " vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
 nmap <leader>dd :call vimspector#Launch()<CR>
-nmap <leader>db :call vimspector#ToggleBreakpoint()<CR>
-nmap <leader>dx :VimspectorReset<CR>
+nmap <leader>dt :call vimspector#ToggleBreakpoint()<CR>
+nmap <Leader>dT :call vimspector#ClearBreakpoints()<CR>
+nmap <leader>dq :VimspectorReset<CR>
 nmap <leader>de :VimspectorEval
 nmap <leader>dw :VimspectorWatch
 " nmap <leader>do :VimspectorShowOutput
