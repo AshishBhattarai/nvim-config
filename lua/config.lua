@@ -147,9 +147,8 @@ require("ibl").setup {
     	  "lspinfo",
     	  "TelescopePrompt",
     	  "TelescopeResults",
-    	  "mason",
 	  "gitcommit",
-	  "mann",
+	  "man",
     	  "NvimTree",
     	  ""
     	},

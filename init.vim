@@ -7,7 +7,7 @@ Plug 'itchyny/lightline.vim'
 " fuzzy finder
 " Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 " colorscheme
 Plug 'sainnhe/gruvbox-material'
 Plug 'ayu-theme/ayu-vim'
