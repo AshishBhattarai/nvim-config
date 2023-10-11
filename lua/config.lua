@@ -137,25 +137,24 @@ require("auto-save").setup()
 --})
 
 -- blankline
-require("indent_blankline").setup {
-    indentLine_enabled = 1,
-    filetype_exclude = {
-      "help",
-      "terminal",
-      "alpha",
-      "packer",
-      "lspinfo",
-      "TelescopePrompt",
-      "TelescopeResults",
-      "mason",
-      "NvimTree",
-      ""
+require("ibl").setup {
+    exclude = {
+    	filetypes = {
+    	  "help",
+    	  "terminal",
+    	  "alpha",
+    	  "packer",
+    	  "lspinfo",
+    	  "TelescopePrompt",
+    	  "TelescopeResults",
+    	  "mason",
+	  "gitcommit",
+	  "mann",
+    	  "NvimTree",
+    	  ""
+    	},
+    	buftypes = { "terminal", "nofile", "prompt" },
     },
-    buftype_exclude = { "terminal" },
-    show_trailing_blankline_indent = true,
-    show_current_context = true,
-    show_current_context_start = true,
-    show_end_of_line = true,
 }
 
 -- telescope
