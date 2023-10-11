@@ -211,5 +211,15 @@ let g:floaterm_keymap_toggle = '<A-1>'
 " NERDCommenter
 let g:NERDCreateDefaultMappings = 1
 
+" Run jest for current project
+command! -nargs=0 Jest :call  CocAction('runCommand', 'jest.projectTest')
+
+" Run jest for current file
+command! -nargs=0 JestFile :call  CocAction('runCommand', 'jest.fileTest', ['%'])
+
+" Run jest for current test
+nnoremap <leader>te :call CocAction('runCommand', 'jest.singleTest')<CR>
+nnoremap <leader>tf :call CocAction('runCommand', 'jest.fileTest', ['%'])<CR>
+
 " lua config
 lua require('config')
