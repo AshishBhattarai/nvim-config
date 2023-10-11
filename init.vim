@@ -11,6 +11,8 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 " colorscheme
 Plug 'sainnhe/gruvbox-material'
 Plug 'ayu-theme/ayu-vim'
+Plug 'bluz71/vim-nightfly-colors', { 'as': 'nightfly' }
+Plug 'morhetz/gruvbox'
 " project local config
 Plug 'embear/vim-localvimrc'
 " Comment shortcut
@@ -81,8 +83,8 @@ syntax on
 set termguicolors     " enable true colors support
 " let ayucolor="light"  " for light version of theme
 " let ayucolor="mirage" " for mirage version of theme
-let ayucolor="dark"   " for dark version of theme
-colorscheme ayu
+" let ayucolor="dark"   " for dark version of theme
+colorscheme gruvbox
 
 " persistent undo
 silent !mkdir -p ~/.local/share/nvim/undo
