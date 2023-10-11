@@ -54,7 +54,7 @@ let g:localvimrc_file_dir=".vim"
 let g:lsp_cxx_hl_use_text_props = 1
 
 " lightline
-let g:lightline = {'colorscheme' : 'gruvbox_material'}
+let g:lightline = {'colorscheme' : 'ayu_dark'}
 
 " coc
 let g:coc_node_path=trim(system('which node'))
@@ -84,7 +84,9 @@ set termguicolors     " enable true colors support
 " let ayucolor="light"  " for light version of theme
 " let ayucolor="mirage" " for mirage version of theme
 " let ayucolor="dark"   " for dark version of theme
-colorscheme gruvbox
+
+let g:gruvbox_material_background = 'hard'
+colorscheme gruvbox-material
 
 " persistent undo
 silent !mkdir -p ~/.local/share/nvim/undo
