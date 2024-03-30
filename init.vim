@@ -43,6 +43,8 @@ Plug 'Pocco81/auto-save.nvim'
 " Plug 'andweeb/presence.nvim'
 " Adds indentation guides to all lines
 Plug 'lukas-reineke/indent-blankline.nvim'
+" Merge vimx and tmux status bar
+Plug 'vimpostor/vim-tpipeline'
 
 call plug#end()
 
