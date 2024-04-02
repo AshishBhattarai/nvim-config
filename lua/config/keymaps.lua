@@ -40,7 +40,7 @@ end
 
 function tabCompletion()
   if vim.fn.pumvisible() > 0 then
-    local key = vim.fn.complete_info().selected == -1 and '<C-x><C-u>' or '<C-y>'
+    local key = vim.fn.complete_info().selected == -1 and '<C-n><C-y>' or '<C-y>'
     return esc(key)
   elseif checkBackSpace() then
     return esc('<TAB>')
