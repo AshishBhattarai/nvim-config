@@ -24,3 +24,4 @@ vim.g.coq_settings = {
 require("lazy").setup("plugins")
 require("config.options")
 require("config.keymaps")
+require("config.commands")
