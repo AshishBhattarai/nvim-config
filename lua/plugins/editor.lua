@@ -131,10 +131,6 @@ return {
     branch = 'master'
   },
   {
-    'Pocco81/auto-save.nvim',
-    branch = 'main'
-  },
-  {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
     branch = 'master',
