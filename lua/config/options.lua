@@ -37,3 +37,6 @@ vim.opt.relativenumber = true
 
 -- Split behavior
 vim.opt.splitright = true
+
+-- Automatically save when switching modes
+vim.cmd([[autocmd ModeChanged [nvi]:[nvi] if &modifiable && &buftype ==# '' | silent write | endif]])
