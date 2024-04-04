@@ -86,7 +86,15 @@ return {
   {
     'kevinhwang91/nvim-ufo',
     branch = 'main',
-    dependencies = { 'kevinhwang91/promise-async' }
+    dependencies = { 'kevinhwang91/promise-async' },
+    opts = {
+      provider_selector = function(bufnr, filetype, buftype)
+      	return {'treesitter', 'indent'}
+      end
+    },
+    config = function(_, opts)
+      require('ufo').setup(opts)
+    end
   },
   {
     'nvim-tree/nvim-tree.lua',
@@ -151,7 +159,10 @@ return {
       },
         buftypes = { "terminal", "nofile", "prompt" },
       }
-    }
+    },
+    config = function(_, opts)
+      require('ibl').setup(opts)
+    end
   },
   {
     'vimpostor/vim-tpipeline',

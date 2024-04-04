@@ -21,8 +21,10 @@ vim.opt.fsync = true
 vim.opt.clipboard = 'unnamedplus'
 
 -- Fold
-vim.opt.foldlevel = 99
-vim.opt.foldenable = true
+vim.o.foldcolumn = '1'
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
 
 -- Autowriteall and Autoread
 vim.opt.autowriteall = true
