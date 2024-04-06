@@ -16,9 +16,10 @@ vim.g.coq_settings = {
   auto_start = 'shut-up', 
   ["clients.snippets.warn"] = {"outdated"},
 	["display.ghost_text.enabled"] = false,
-	["clients.tabnine.enabled"] = false,
-	["clients.buffers.same_filetype"] = true,
 	["keymap.recommended"] = false,
+  ["clients.buffers.same_filetype"] = true,
+  ["clients.lsp.weight_adjust"] = 2.0,
+  ["clients.tree_sitter.weight_adjust"] = 1.0,
 }
 
 require("lazy").setup("plugins")
