@@ -99,6 +99,7 @@ return {
   {
     'nvim-tree/nvim-tree.lua',
     branch = 'master',
+    dependencies= { 'nvim-tree/nvim-web-devicons' },
     lazy = false,
     opts = {
       on_attach = function(bufnr)
