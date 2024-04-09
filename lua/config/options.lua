@@ -42,3 +42,7 @@ vim.opt.splitright = true
 
 -- Automatically save when switching modes
 vim.cmd([[autocmd ModeChanged [nvi]:[nvi] if &modifiable && &buftype ==# '' | silent write | endif]])
+
+-- exrc - local vim config
+vim.o.exrc = true
+vim.o.secure = true

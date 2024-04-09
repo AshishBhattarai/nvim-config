@@ -65,12 +65,6 @@ return {
     end
   },
   {
-    'embear/vim-localvimrc',
-    branch = 'master',
-    config = function()
-    end
-  },
-  {
     'numToStr/Comment.nvim',
     branch = 'master'
   },
