@@ -144,6 +144,13 @@ return {
     branch = 'master'
   },
   {
+    'f-person/git-blame.nvim',
+    branch = 'master',
+    config = function()
+      require('gitblame').setup();
+    end
+  },
+  {
     'lukas-reineke/indent-blankline.nvim',
     main = 'ibl',
     branch = 'master',
