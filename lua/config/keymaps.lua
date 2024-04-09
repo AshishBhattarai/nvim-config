@@ -57,7 +57,7 @@ end
 
 -- Coq keymaps
 vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = true, expr = true, noremap = false })
-vim.api.nvim_set_keymap('i', '<Esc>', [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
+vim.keymap.set('i', '<Esc>', [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
 
 _G.user_keymaps = {
   tab_completion = tabCompletion

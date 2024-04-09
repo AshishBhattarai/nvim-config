@@ -1,6 +1,5 @@
-
 -- JS tool commands
-
+------------------------------------------------------------------------ 
 function runPrettier()
     local filename = vim.fn.expand('%:p')
     local command = 'npx prettier "' .. filename .. '" --write'
@@ -12,9 +11,6 @@ local function runJest(spec_name)
   local fname = vim.fn.expand('%:p')
   local test_name = spec_name and ' -t \'' .. spec_name .. '\'' or ''
   local command = 'npx jest ' .. fname .. test_name
-
-  vim.api.nvim_err_writeln(command)
-
   -- If terminal buffer exists, delete it
   if jest_terminal_buffer ~= -1 and vim.fn.bufexists(jest_terminal_buffer) == 1 then
     vim.api.nvim_command(jest_terminal_buffer.. 'bdelete')
@@ -43,5 +39,4 @@ end
 vim.api.nvim_create_user_command('RunPrettier', runPrettier, {})
 vim.api.nvim_create_user_command('RunJest', runJestFile, {})
 vim.api.nvim_create_user_command('RunJestSpec', runJestSpec, {})
-
--- 
+------------------------------------------------------------------------ 
