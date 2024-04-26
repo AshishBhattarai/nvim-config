@@ -20,6 +20,7 @@ vim.g.coq_settings = {
   ["clients.buffers.same_filetype"] = true,
   ["clients.lsp.weight_adjust"] = 2.0,
   ["clients.tree_sitter.weight_adjust"] = 1.0,
+  ["weights.prefix_matches"] = 20.0,
 }
 
 require("lazy").setup("plugins")
