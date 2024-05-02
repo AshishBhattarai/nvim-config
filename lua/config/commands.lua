@@ -1,23 +1,47 @@
 -- JS tool commands
 ------------------------------------------------------------------------ 
 function runPrettier()
-    local filename = vim.fn.expand('%:p')
+    local filename = vim.fn.expand('%')
     local command = 'npx prettier "' .. filename .. '" --write'
     vim.fn.system(command)
+    -- Reopen the current file after running Prettier
+    vim.cmd("e")
 end
 
-local jest_terminal_buffer = -1
+function runESLintFix()
+    local filename = vim.fn.expand('%')
+    local command = 'npx eslint "' .. filename .. '" --fix'
+    vim.fn.system(command)
+    -- Reopen the current file
+    vim.cmd("e")
+end
+
+local js_terminal_buffer = -1
+
+local function runESLint()
+  local fname = vim.fn.expand('%')
+  local command = 'npx eslint ' .. fname
+  -- If terminal buffer exists, delete it
+  if js_terminal_buffer ~= -1 and vim.fn.bufexists(js_terminal_buffer) == 1 then
+    vim.api.nvim_command(js_terminal_buffer.. 'bdelete')
+  end 
+  -- Open a new split terminal buffer and execute the Jest command
+  vim.cmd('split | terminal ' .. command)
+  js_terminal_buffer = vim.fn.bufnr('%')
+  vim.cmd('wincmd p')
+end
+
 local function runJest(spec_name)
   local fname = vim.fn.expand('%:p')
   local test_name = spec_name and ' -t \'' .. spec_name .. '\'' or ''
   local command = 'npx jest ' .. fname .. test_name
   -- If terminal buffer exists, delete it
-  if jest_terminal_buffer ~= -1 and vim.fn.bufexists(jest_terminal_buffer) == 1 then
-    vim.api.nvim_command(jest_terminal_buffer.. 'bdelete')
+  if js_terminal_buffer ~= -1 and vim.fn.bufexists(js_terminal_buffer) == 1 then
+    vim.api.nvim_command(js_terminal_buffer.. 'bdelete')
   end 
   -- Open a new split terminal buffer and execute the Jest command
   vim.cmd('split | terminal ' .. command)
-  jest_terminal_buffer = vim.fn.bufnr('%')
+  js_terminal_buffer = vim.fn.bufnr('%')
   vim.cmd('wincmd p')
 end
 
@@ -39,4 +63,6 @@ end
 vim.api.nvim_create_user_command('RunPrettier', runPrettier, {})
 vim.api.nvim_create_user_command('RunJest', runJestFile, {})
 vim.api.nvim_create_user_command('RunJestSpec', runJestSpec, {})
+vim.api.nvim_create_user_command('RunESLint', runESLint, {})
+vim.api.nvim_create_user_command('RunESLintFix', runESLintFix, {})
 ------------------------------------------------------------------------ 
