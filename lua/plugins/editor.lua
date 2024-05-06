@@ -181,10 +181,6 @@ return {
     end
   },
   {
-    'vimpostor/vim-tpipeline',
-    branch = 'master'
-  },
-  {
     'ms-jpq/coq_nvim',
     branch = 'coq',
     build = 'python3 -m coq deps',
