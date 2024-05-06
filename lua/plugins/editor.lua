@@ -62,7 +62,21 @@ return {
   },
   {
     'numToStr/Comment.nvim',
-    branch = 'master'
+    branch = 'master',
+    config = function()
+        require("Comment").setup()
+    end
+  },
+  {
+    'rmagatti/auto-session',
+    branch = 'main',
+    opts = {
+        auto_save_enabled = true,
+        auto_restore_enabled = true,
+    },
+    config = function(_, opts)
+        require("auto-session").setup(opts)
+    end
   },
   {
     'nvim-treesitter/nvim-treesitter',

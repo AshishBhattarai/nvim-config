@@ -3,6 +3,7 @@
 function runPrettier()
     local filename = vim.fn.expand('%')
     local command = 'npx prettier "' .. filename .. '" --write'
+    vim.cmd("w")
     vim.fn.system(command)
     -- Reopen the current file after running Prettier
     vim.cmd("e")
@@ -11,6 +12,7 @@ end
 function runESLintFix()
     local filename = vim.fn.expand('%')
     local command = 'npx eslint "' .. filename .. '" --fix'
+    vim.cmd("w")
     vim.fn.system(command)
     -- Reopen the current file
     vim.cmd("e")
