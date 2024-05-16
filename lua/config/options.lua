@@ -1,5 +1,10 @@
 local home_dir = os.getenv("HOME")
 
+-- encoding
+vim.o.encoding = 'utf-8'
+vim.o.fileencoding = 'utf-8'
+vim.o.fileencodings = 'utf-8'
+
 -- tab size
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2

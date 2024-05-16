@@ -49,7 +49,7 @@ end
 
 function getCurrentLineText()
   local current_line = vim.api.nvim_get_current_line()
-  local pattern = '%s*"([^"]+)"'
+  local pattern = '%s*["\']([^"\']+)["\']'
   local captured_text = current_line:match(pattern)
   return captured_text
 end
