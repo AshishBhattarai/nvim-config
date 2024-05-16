@@ -43,6 +43,11 @@ return {
       	  height = 0.80,
       	  preview_cutoff = 120,
       	},
+        path_display = {
+          filename_first = {
+            reverse_directories = false
+          }
+        },
         mappings = {
           i = {
       	    ["<C-s>"] = "select_horizontal"
