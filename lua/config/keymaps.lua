@@ -8,6 +8,10 @@ vim.keymap.set('v', '<A-j>', ':m \'>+1<CR>gv=gv', { silent = true })
 vim.keymap.set('n', '<C-j>', ':cn<CR>', { silent = true })
 vim.keymap.set('n', '<C-k>', ':cp<CR>', { silent = true })
 
+-- Remap # and *
+vim.keymap.set('n', '#', '#``', { noremap = true });
+vim.keymap.set('n', '*', '%', { noremap = true });
+
 -- Lsp keymaps
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
