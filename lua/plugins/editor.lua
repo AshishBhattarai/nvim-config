@@ -196,7 +196,7 @@ return {
     branch = 'master',
     config = function()
       local lspconfig = require('lspconfig')
-      local servers = { 'zls', 'tsserver', 'typos_lsp', 'tailwindcss' }
+      local servers = { 'zls', 'tsserver', 'typos_lsp', 'glsl_analyzer' , 'tailwindcss' }
       for _, lsp in ipairs(servers) do
         lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({}))
       end
