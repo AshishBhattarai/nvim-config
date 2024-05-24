@@ -236,7 +236,40 @@ return {
     'rcarriga/nvim-dap-ui',
     dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
     config = function()
-      require('dapui').setup();
+      local dap, dapui = require('dap'), require('dapui');
+      dapui.setup();
+
+      -- adapters
+      dap.adapters.lldb = {
+        type = 'executable',
+        command = '/usr/bin/lldb-vscode', -- adjust as needed, must be absolute path
+        name = 'lldb'
+      }
+
+      -- Debugger keymans
+      vim.keymap.set('n', '<leader>dd', dap.continue);
+      vim.keymap.set('n', '<leader>dc', dap.continue);
+      vim.keymap.set('n', '<leader>dn', dap.step_over);
+      vim.keymap.set('n', '<leader>di', dap.step_into);
+      vim.keymap.set('n', '<leader>do', dap.step_out);
+      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint);
+      vim.keymap.set('n', '<leader>dB', dap.set_breakpoint);
+      vim.keymap.set('n', '<leader>de', dap.repl.open);
+      vim.keymap.set('n', '<leader>dr', dap.restart);
+      vim.keymap.set('n', '<leader>dp', dap.pause);
+      --
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
     end
   }
 }
