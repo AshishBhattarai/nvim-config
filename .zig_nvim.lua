@@ -13,9 +13,10 @@ dap.configurations.zig = {
     name = 'Launch',
     type = 'lldb',
     request = 'launch',
-    program = '${workspaceFolder}/zig-out/bin/project_inception',
+    program = '${workspaceFolder}/zig-out/bin/test',
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
     args = {},
   },
 }
+-- zig test -femit-bin=zig-out/bin/test src/dsa/sparse.zig

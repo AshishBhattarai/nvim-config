@@ -253,7 +253,8 @@ return {
       vim.keymap.set('n', '<leader>di', dap.step_into);
       vim.keymap.set('n', '<leader>do', dap.step_out);
       vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint);
-      vim.keymap.set('n', '<leader>dB', dap.set_breakpoint);
+      vim.keymap.set('n', '<leader>dB', dap.clear_breakpoints);
+      vim.keymap.set('n', '<leader>dl', dap.list_breakpoints);
       vim.keymap.set('n', '<leader>de', dap.repl.open);
       vim.keymap.set('n', '<leader>dr', dap.restart);
       vim.keymap.set('n', '<leader>dp', dap.pause);
