@@ -20,7 +20,7 @@ vim.opt.undofile = true
 vim.opt.undodir = home_dir .. '/.local/share/nvim/undo'
 vim.opt.dir = home_dir .. '/.local/share/nvim/swap'
 -- Lost files on power outage
-vim.opt.fsync = true                              
+vim.opt.fsync = true
 
 -- Copy from clipboard
 vim.opt.clipboard = 'unnamedplus'

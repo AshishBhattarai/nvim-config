@@ -12,11 +12,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.coq_settings = { 
-  auto_start = 'shut-up', 
-  ["clients.snippets.warn"] = {"outdated"},
-	["display.ghost_text.enabled"] = false,
-	["keymap.recommended"] = false,
+vim.g.coq_settings = {
+  auto_start = 'shut-up',
+  ["clients.snippets.warn"] = { "outdated" },
+  ["display.ghost_text.enabled"] = false,
+  ["keymap.recommended"] = false,
   ["clients.buffers.same_filetype"] = true,
   ["clients.lsp.weight_adjust"] = 2.0,
   ["weights.prefix_matches"] = 20.0,

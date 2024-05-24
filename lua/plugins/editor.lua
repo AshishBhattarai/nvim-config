@@ -17,7 +17,7 @@ return {
     branch = 'master',
     config = function()
       vim.g.lightline = {
-	      colorscheme = 'ayu_dark'
+        colorscheme = 'ayu_dark'
       }
     end
   },
@@ -27,22 +27,22 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     opts = {
       defaults = {
-      	selection_strategy = "reset",
-      	sorting_strategy = "ascending",
-      	layout_strategy = "horizontal",
-      	layout_config = {
-      	  horizontal = {
-      	    prompt_position = "top",
-      	    preview_width = 0.55,
-      	    results_width = 0.8,
-      	  },
-      	  vertical = {
-      	    mirror = false,
-      	  },
-      	  width = 0.87,
-      	  height = 0.80,
-      	  preview_cutoff = 120,
-      	},
+        selection_strategy = "reset",
+        sorting_strategy = "ascending",
+        layout_strategy = "horizontal",
+        layout_config = {
+          horizontal = {
+            prompt_position = "top",
+            preview_width = 0.55,
+            results_width = 0.8,
+          },
+          vertical = {
+            mirror = false,
+          },
+          width = 0.87,
+          height = 0.80,
+          preview_cutoff = 120,
+        },
         path_display = {
           filename_first = {
             reverse_directories = false
@@ -50,9 +50,9 @@ return {
         },
         mappings = {
           i = {
-      	    ["<C-s>"] = "select_horizontal"
+            ["<C-s>"] = "select_horizontal"
           }
-      	}
+        }
       },
     },
     config = function(_, opts)
@@ -69,18 +69,18 @@ return {
     'numToStr/Comment.nvim',
     branch = 'master',
     config = function()
-        require("Comment").setup()
+      require("Comment").setup()
     end
   },
   {
     'rmagatti/auto-session',
     branch = 'main',
     opts = {
-        auto_save_enabled = true,
-        auto_restore_enabled = true,
+      auto_save_enabled = true,
+      auto_restore_enabled = true,
     },
     config = function(_, opts)
-        require("auto-session").setup(opts)
+      require("auto-session").setup(opts)
     end
   },
   {
@@ -93,7 +93,7 @@ return {
     version = "*",
     event = "VeryLazy",
     config = function()
-        require("nvim-surround").setup()
+      require("nvim-surround").setup()
     end
   },
   {
@@ -102,7 +102,7 @@ return {
     dependencies = { 'kevinhwang91/promise-async' },
     opts = {
       provider_selector = function(bufnr, filetype, buftype)
-      	return {'treesitter', 'indent'}
+        return { 'treesitter', 'indent' }
       end
     },
     config = function(_, opts)
@@ -112,7 +112,7 @@ return {
   {
     'nvim-tree/nvim-tree.lua',
     branch = 'master',
-    dependencies= { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     lazy = false,
     opts = {
       on_attach = function(bufnr)
@@ -132,13 +132,13 @@ return {
     },
     config = function(_, opts)
       require('nvim-tree').setup(opts)
-      vim.keymap.set('n', '<A-0>', ':NvimTreeFindFileToggle<CR>', {silent = true})
-      vim.keymap.set('n', '<A-9>', ':NvimTreeFindFile<CR>', {silent = true})
-      vim.keymap.set('n', '<A-8>', ':NvimTreeCollapse<CR>', {silent = true})
+      vim.keymap.set('n', '<A-0>', ':NvimTreeFindFileToggle<CR>', { silent = true })
+      vim.keymap.set('n', '<A-9>', ':NvimTreeFindFile<CR>', { silent = true })
+      vim.keymap.set('n', '<A-8>', ':NvimTreeCollapse<CR>', { silent = true })
     end
   },
   {
-    'voldikss/vim-floaterm', 
+    'voldikss/vim-floaterm',
     branch = 'master',
     init = function()
       vim.g.floaterm_winblend = 30
@@ -166,18 +166,18 @@ return {
     opts = {
       exclude = {
         filetypes = {
-      	"help",
-      	"terminal",
-      	"alpha",
-      	"packer",
-      	"lspinfo",
-      	"TelescopePrompt",
-      	"TelescopeResults",
-        "gitcommit",
-        "man",
-      	"NvimTree",
-      	""
-      },
+          "help",
+          "terminal",
+          "alpha",
+          "packer",
+          "lspinfo",
+          "TelescopePrompt",
+          "TelescopeResults",
+          "gitcommit",
+          "man",
+          "NvimTree",
+          ""
+        },
         buftypes = { "terminal", "nofile", "prompt" },
       }
     },
@@ -196,15 +196,45 @@ return {
     branch = 'master',
     config = function()
       local lspconfig = require('lspconfig')
-      local servers = { 'zls', 'tsserver', 'typos_lsp', 'glsl_analyzer' , 'tailwindcss' }
+      local servers = { 'zls', 'tsserver', 'typos_lsp', 'glsl_analyzer', 'tailwindcss', 'lua_ls' }
       for _, lsp in ipairs(servers) do
         lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({}))
       end
+
+      -- Lsp keymaps
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+          -- Enable completion triggered by <c-x><c-o>
+          vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+          -- Buffer local mappings.
+          -- See `:help vim.lsp.*` for documentation on any of the below functions
+          local opts = { buffer = ev.buf }
+          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+          vim.keymap.set('n', 'gd', vim.diagnostic.open_float, opts)
+          vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, opts)
+          vim.keymap.set('n', 'gu', vim.lsp.buf.hover, opts)
+          vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, opts)
+          vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
+          vim.keymap.set({ 'n', 'v' }, 'ca', vim.lsp.buf.code_action, opts)
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+          vim.keymap.set('n', '<A-f>', vim.lsp.buf.format, opts)
+
+          -- split jumps
+          vim.keymap.set('n', '<leader>s', ':split | lua vim.lsp.buf.definition()<CR>', opts)
+          vim.keymap.set('n', '<leader>v', ':vsplit | lua vim.lsp.buf.definition()<CR>', opts)
+          vim.keymap.set('n', '<leader>.',
+            [[<Cmd>let save_pos = getpos('.')<CR>:tabnew %<CR>:execute 'normal! ' . save_pos[1] . 'G' . save_pos[2] . '|'<CR>:lua vim.lsp.buf.definition()<CR>]],
+            opts)
+        end,
+      });
+      --
     end
-  }, 
+  },
   {
-    'rcarriga/nvim-dap-ui', 
-    dependencies = {'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio'},
+    'rcarriga/nvim-dap-ui',
+    dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
     config = function()
       require('dapui').setup();
     end
