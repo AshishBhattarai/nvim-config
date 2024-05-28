@@ -46,7 +46,19 @@ vim.opt.relativenumber = true
 vim.opt.splitright = true
 
 -- Automatically save when switching modes
-vim.cmd([[autocmd ModeChanged [nvi]:[nvi] if &modifiable && &buftype ==# '' | silent write | endif]])
+vim.api.nvim_create_autocmd("ModeChanged", {
+  pattern = "[nvi]:[nvi]",
+  callback = function()
+    local modifiable = vim.bo.modifiable
+    local buftype = vim.bo.buftype
+    local file = vim.fn.expand('%')
+    local filereadable = vim.fn.filereadable(file) == 1
+
+    if modifiable and buftype == '' and filereadable then
+      vim.cmd("silent write")
+    end
+  end,
+})
 
 -- exrc - local vim config
 vim.o.exrc = true
