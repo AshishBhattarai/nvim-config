@@ -69,3 +69,16 @@ vim.api.nvim_create_user_command('RunJestSpec', runJestSpec, {})
 vim.api.nvim_create_user_command('RunESLint', runESLint, {})
 vim.api.nvim_create_user_command('RunESLintFix', runESLintFix, {})
 ------------------------------------------------------------------------
+
+-- Zig commands
+function emitTestBin()
+  local filename = vim.fn.expand('%')
+  local command = 'zig test -femit-bin=zig-out/bin/test ' .. filename
+  vim.fn.jobstart(command, {
+    stdout_buffered = true,
+    stderr_buffered = true,
+  })
+end
+
+vim.api.nvim_create_user_command('EmitTestBin', emitTestBin, {})
+------------------------------------------------------------------------
