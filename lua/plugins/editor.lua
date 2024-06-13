@@ -272,5 +272,21 @@ return {
         dapui.close()
       end
     end
+  },
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
+    config = function()
+      local harpoon = require('harpoon');
+      -- REQUIRED
+      harpoon:setup()
+      -- REQUIRED
+
+      vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)
+      vim.keymap.set("n", "<A-S-o>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+      vim.keymap.set("n", "<A-o>", function() harpoon:list():prev() end)
+      vim.keymap.set("n", "<A-i>", function() harpoon:list():next() end)
+    end
   }
 }
