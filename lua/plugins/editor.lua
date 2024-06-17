@@ -224,7 +224,7 @@ return {
           -- split jumps
           vim.keymap.set('n', '<leader>s', ':split | lua vim.lsp.buf.definition()<CR>', opts)
           vim.keymap.set('n', '<leader>v', ':vsplit | lua vim.lsp.buf.definition()<CR>', opts)
-          vim.keymap.set('n', '<leader>t',
+          vim.keymap.set('n', '<leader>.',
             [[<Cmd>let save_pos = getpos('.')<CR>:tabnew %<CR>:execute 'normal! ' . save_pos[1] . 'G' . save_pos[2] . '|'<CR>:lua vim.lsp.buf.definition()<CR>]],
             opts)
         end,
@@ -298,7 +298,7 @@ return {
             harpoon.ui:select_menu_item({ split = true })
           end, { buffer = cx.bufnr })
 
-          vim.keymap.set("n", "<C-t>", function()
+          vim.keymap.set("n", "<C-.>", function()
             harpoon.ui:select_menu_item({ tabedit = true })
           end, { buffer = cx.bufnr })
         end,
