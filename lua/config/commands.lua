@@ -1,8 +1,9 @@
 -- JS tool commands
 ------------------------------------------------------------------------
+vim.g.js_package_manager = 'npx'
 function runPrettier()
   local filename = vim.fn.expand('%')
-  local command = 'npx prettier "' .. filename .. '" --write'
+  local command = vim.g.js_package_manager .. ' prettier "' .. filename .. '" --write'
   vim.cmd("w")
   vim.fn.system(command)
   -- Reopen the current file after running Prettier
@@ -11,7 +12,7 @@ end
 
 function runESLintFix()
   local filename = vim.fn.expand('%')
-  local command = 'npx eslint "' .. filename .. '" --fix'
+  local command = vim.g.js_package_manager .. ' eslint "' .. filename .. '" --fix'
   vim.cmd("w")
   vim.fn.system(command)
   -- Reopen the current file
@@ -22,7 +23,7 @@ local js_terminal_buffer = -1
 
 local function runESLint()
   local fname = vim.fn.expand('%')
-  local command = 'npx eslint ' .. fname
+  local command = vim.g.js_package_manager .. ' eslint ' .. fname
   -- If terminal buffer exists, delete it
   if js_terminal_buffer ~= -1 and vim.fn.bufexists(js_terminal_buffer) == 1 then
     vim.api.nvim_command(js_terminal_buffer .. 'bdelete')
@@ -36,7 +37,7 @@ end
 local function runJest(spec_name)
   local fname = vim.fn.expand('%:p')
   local test_name = spec_name and ' -t \'' .. spec_name .. '\'' or ''
-  local command = 'npx jest ' .. fname .. test_name
+  local command = vim.g.js_package_manager .. ' jest ' .. fname .. test_name
   -- If terminal buffer exists, delete it
   if js_terminal_buffer ~= -1 and vim.fn.bufexists(js_terminal_buffer) == 1 then
     vim.api.nvim_command(js_terminal_buffer .. 'bdelete')
