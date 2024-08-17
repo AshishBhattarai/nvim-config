@@ -12,6 +12,10 @@ vim.keymap.set('n', '<C-k>', ':cp<CR>', { silent = true })
 vim.keymap.set('n', '#', '#``', { noremap = true });
 vim.keymap.set('n', '*', '%', { noremap = true });
 
+-- Coq keymaps
+vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = true, expr = true, noremap = false })
+vim.keymap.set('i', '<Esc>', [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
+
 function checkBackSpace()
   local col = vim.fn.col('.') - 1
   return col <= 0 or vim.fn.getline('.'):sub(col, col):match('%s')
@@ -31,10 +35,6 @@ function tabCompletion()
     return esc('<C-x><C-u>')
   end
 end
-
--- Coq keymaps
-vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = true, expr = true, noremap = false })
-vim.keymap.set('i', '<Esc>', [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
 
 _G.user_keymaps = {
   tab_completion = tabCompletion
