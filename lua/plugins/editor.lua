@@ -149,14 +149,31 @@ return {
     end
   },
   {
-    'voldikss/vim-floaterm',
+    'numToStr/FTerm.nvim',
     branch = 'master',
+    opts = {
+      border = 'double',
+      dimensions = {
+        height = 0.8, -- Height of the terminal window
+        width = 0.8,  -- Width of the terminal window
+      }
+    },
     init = function()
-      vim.g.floaterm_winblend = 30
-      vim.g.floaterm_keymap_new = '<A-2>'
-      vim.g.floaterm_keymap_prev = '<A-3>'
-      vim.g.floaterm_keymap_next = '<A-4>'
-      vim.g.floaterm_keymap_toggle = '<A-1>'
+      local fterm = require('FTerm')
+
+      vim.api.nvim_create_user_command('FTermOpen', fterm.open, { bang = true })
+      vim.api.nvim_create_user_command('FTermClose', fterm.close, { bang = true })
+      vim.api.nvim_create_user_command('FTermExit', fterm.exit, { bang = true })
+      vim.api.nvim_create_user_command('FTermToggle', fterm.toggle, { bang = true })
+
+      vim.keymap.set('n', '<A-1>', fterm.toggle, { silent = true })
+      vim.keymap.set('t', '<A-1>', fterm.toggle, { silent = true })
+
+      -- vim.g.floaterm_winblend = 30
+      -- vim.g.floaterm_keymap_new = '<A-2>'
+      -- vim.g.floaterm_keymap_prev = '<A-3>'
+      -- vim.g.floaterm_keymap_next = '<A-4>'
+      -- vim.g.floaterm_keymap_toggle = '<A-1>'
     end
   },
   {
@@ -167,7 +184,7 @@ return {
     'f-person/git-blame.nvim',
     branch = 'master',
     config = function()
-      require('gitblame').setup();
+      require('gitblame').setup()
     end
   },
   {
