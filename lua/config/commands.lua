@@ -109,6 +109,7 @@ local function botTermWinToggle()
     local current_window = vim.api.nvim_get_current_win()
     if current_window ~= bot_term_win_id then
       vim.api.nvim_set_current_win(bot_term_win_id)
+      vim.cmd('startinsert')
     else
       vim.cmd('wincmd p')
     end
