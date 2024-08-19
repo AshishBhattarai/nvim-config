@@ -139,7 +139,10 @@ return {
         -- custom mappings
         vim.keymap.set('n', '<C-s>', api.node.open.horizontal, opts('Open: Horizontal Split'))
         vim.keymap.set('n', 'd', api.fs.trash, opts('Trash'))
-      end
+      end,
+      view = {
+        preserve_window_proportions = true,
+      },
     },
     config = function(_, opts)
       require('nvim-tree').setup(opts)

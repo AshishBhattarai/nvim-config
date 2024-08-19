@@ -119,7 +119,7 @@ local function botTermWinToggle()
 end
 
 vim.api.nvim_create_user_command('BotTerm', botTerm, {})
-vim.keymap.set('t', '<A-2>', botTermWinToggle, { silent = true });
-vim.keymap.set('n', '<A-2>', botTermWinToggle, { silent = true });
-vim.keymap.set('n', '<A-3>', botTerm, { silent = true });
-vim.keymap.set('t', '<A-3>', botTerm, { silent = true });
+vim.keymap.set('t', '<A-3>', botTermWinToggle, { silent = true });
+vim.keymap.set('n', '<A-3>', botTermWinToggle, { silent = true });
+vim.keymap.set('n', '<A-2>', botTerm, { silent = true });
+vim.keymap.set('t', '<A-2>', botTerm, { silent = true });
