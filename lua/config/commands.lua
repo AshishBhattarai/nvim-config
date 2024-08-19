@@ -19,14 +19,14 @@ local function runESLintFix()
   vim.cmd("e")
 end
 
-local js_terminal_buffer = -1
+local js_terminal_buffer = nil
 
 local function runESLint()
   local fname = vim.fn.expand('%')
   local command = vim.g.js_package_manager .. ' eslint ' .. fname
   -- If terminal buffer exists, delete it
-  if js_terminal_buffer ~= -1 and vim.fn.bufexists(js_terminal_buffer) == 1 then
-    vim.api.nvim_command(js_terminal_buffer .. 'bdelete')
+  if js_terminal_buffer and vim.api.nvim_buf_is_valid(js_terminal_buffer) then
+    vim.cmd(js_terminal_buffer .. 'bdelete!')
   end
   -- Open a new split terminal buffer and execute the Jest command
   vim.cmd('split | terminal ' .. command)
@@ -39,8 +39,8 @@ local function runJest(spec_name)
   local test_name = spec_name and ' -t \'' .. spec_name .. '\'' or ''
   local command = vim.g.js_package_manager .. ' jest ' .. fname .. test_name
   -- If terminal buffer exists, delete it
-  if js_terminal_buffer ~= -1 and vim.fn.bufexists(js_terminal_buffer) == 1 then
-    vim.api.nvim_command(js_terminal_buffer .. 'bdelete')
+  if js_terminal_buffer and vim.api.nvim_buf_is_valid(js_terminal_buffer) then
+    vim.cmd(js_terminal_buffer .. 'bdelete!')
   end
   -- Open a new split terminal buffer and execute the Jest command
   vim.cmd('split | terminal ' .. command)
@@ -83,3 +83,42 @@ end
 
 vim.api.nvim_create_user_command('EmitTestBin', emitTestBin, {})
 ------------------------------------------------------------------------
+
+-- Editor commands
+local bot_term_buf_id = nil
+local bot_term_win_id = nil
+local function botTerm()
+  if bot_term_win_id and vim.api.nvim_win_is_valid(bot_term_win_id) then
+    vim.api.nvim_win_close(bot_term_win_id, true)
+    bot_term_win_id = nil
+    return
+  end
+
+  if bot_term_buf_id and vim.api.nvim_buf_is_valid(bot_term_buf_id) then
+    vim.cmd('bot split | b ' .. bot_term_buf_id .. ' | resize 14')
+  else
+    vim.cmd('bot split | resize 14 | terminal')
+    bot_term_buf_id = vim.api.nvim_get_current_buf()
+  end
+  bot_term_win_id = vim.api.nvim_get_current_win()
+  vim.cmd('startinsert')
+end
+
+local function botTermWinToggle()
+  if bot_term_win_id and vim.api.nvim_win_is_valid(bot_term_win_id) then
+    local current_window = vim.api.nvim_get_current_win()
+    if current_window ~= bot_term_win_id then
+      vim.api.nvim_set_current_win(bot_term_win_id)
+    else
+      vim.cmd('wincmd p')
+    end
+  else
+    botTerm()
+  end
+end
+
+vim.api.nvim_create_user_command('BotTerm', botTerm, {})
+vim.keymap.set('t', '<A-2>', botTermWinToggle, { silent = true });
+vim.keymap.set('n', '<A-2>', botTermWinToggle, { silent = true });
+vim.keymap.set('n', '<A-3>', botTerm, { silent = true });
+vim.keymap.set('t', '<A-3>', botTerm, { silent = true });
