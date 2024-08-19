@@ -16,16 +16,16 @@ vim.keymap.set('n', '*', '%', { noremap = true });
 vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = true, expr = true, noremap = false })
 vim.keymap.set('i', '<Esc>', [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
 
-function checkBackSpace()
+local function checkBackSpace()
   local col = vim.fn.col('.') - 1
   return col <= 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
 
-function esc(cmd)
+local function esc(cmd)
   return vim.api.nvim_replace_termcodes(cmd, true, true, true)
 end
 
-function tabCompletion()
+local function tabCompletion()
   if vim.fn.pumvisible() > 0 then
     local key = vim.fn.complete_info().selected == -1 and '<C-n><C-y>' or '<C-y>'
     return esc(key)

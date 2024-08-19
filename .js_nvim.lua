@@ -3,4 +3,3 @@ vim.keymap.set('n', '<leader>tf', ':RunJest<CR>', { silent = true })
 vim.keymap.set('n', '<leader>tt', ':RunJestSpec<CR>', { silent = true })
 vim.keymap.set('n', '<leader>te', ':RunESLint<CR>', { silent = true })
 vim.keymap.set('n', '<leader>tE', ':RunESLintFix<CR>', { silent = true })
-

@@ -24,7 +24,9 @@ return {
   {
     'nvim-telescope/telescope.nvim',
     branch = 'master',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim',
+      { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' }
+    },
     opts = {
       defaults = {
         selection_strategy = "reset",
@@ -56,7 +58,10 @@ return {
       },
     },
     config = function(_, opts)
-      require('telescope').setup(opts)
+      local telescope = require('telescope')
+
+      telescope.setup(opts)
+      telescope.load_extension("fzf")
 
       local builtin = require('telescope.builtin')
       vim.keymap.set('n', '<A-p>', builtin.find_files, {})
@@ -101,7 +106,7 @@ return {
     branch = 'main',
     dependencies = { 'kevinhwang91/promise-async' },
     opts = {
-      provider_selector = function(bufnr, filetype, buftype)
+      provider_selector = function(_, _, _)
         return { 'treesitter', 'indent' }
       end
     },
@@ -119,7 +124,13 @@ return {
         local api = require "nvim-tree.api"
 
         local function opts(desc)
-          return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+          return {
+            desc = "nvim-tree: " .. desc,
+            buffer = bufnr,
+            noremap = true,
+            silent = true,
+            nowait = true
+          }
         end
 
         -- default mappings
@@ -190,47 +201,6 @@ return {
     branch = 'coq',
     build = 'python3 -m coq deps',
     dependencies = { 'ms-jpq/coq.artifacts', 'ms-jpq/coq.thirdparty' },
-  },
-  {
-    'neovim/nvim-lspconfig',
-    branch = 'master',
-    config = function()
-      local lspconfig = require('lspconfig')
-      local servers = { 'zls', 'tsserver', 'typos_lsp', 'glsl_analyzer', 'tailwindcss', 'lua_ls', 'rust_analyzer' }
-      for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({}))
-      end
-
-      -- Lsp keymaps
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-        callback = function(ev)
-          -- Enable completion triggered by <c-x><c-o>
-          vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-          -- Buffer local mappings.
-          -- See `:help vim.lsp.*` for documentation on any of the below functions
-          local opts = { buffer = ev.buf }
-          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-          vim.keymap.set('n', 'gd', vim.diagnostic.open_float, opts)
-          vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, opts)
-          vim.keymap.set('n', 'gu', vim.lsp.buf.hover, opts)
-          vim.keymap.set('n', 'gy', vim.lsp.buf.type_definition, opts)
-          vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
-          vim.keymap.set({ 'n', 'v' }, 'ca', vim.lsp.buf.code_action, opts)
-          vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-          vim.keymap.set('n', '<A-f>', vim.lsp.buf.format, opts)
-
-          -- split jumps
-          vim.keymap.set('n', '<leader>s', ':split | lua vim.lsp.buf.definition()<CR>', opts)
-          vim.keymap.set('n', '<leader>v', ':vsplit | lua vim.lsp.buf.definition()<CR>', opts)
-          vim.keymap.set('n', '<leader>.',
-            [[<Cmd>let save_pos = getpos('.')<CR>:tabnew %<CR>:execute 'normal! ' . save_pos[1] . 'G' . save_pos[2] . '|'<CR>:lua vim.lsp.buf.definition()<CR>]],
-            opts)
-        end,
-      });
-      --
-    end
   },
   {
     'rcarriga/nvim-dap-ui',

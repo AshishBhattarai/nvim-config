@@ -1,7 +1,7 @@
 -- JS tool commands
 ------------------------------------------------------------------------
 vim.g.js_package_manager = 'npx'
-function runPrettier()
+local function runPrettier()
   local filename = vim.fn.expand('%')
   local command = vim.g.js_package_manager .. ' prettier "' .. filename .. '" --write'
   vim.cmd("w")
@@ -10,7 +10,7 @@ function runPrettier()
   vim.cmd("e")
 end
 
-function runESLintFix()
+local function runESLintFix()
   local filename = vim.fn.expand('%')
   local command = vim.g.js_package_manager .. ' eslint "' .. filename .. '" --fix'
   vim.cmd("w")
@@ -48,19 +48,19 @@ local function runJest(spec_name)
   vim.cmd('wincmd p')
 end
 
-function getCurrentLineText()
+local function getCurrentLineText()
   local current_line = vim.api.nvim_get_current_line()
   local pattern = '%s*["\']([^"\']+)["\']'
   local captured_text = current_line:match(pattern)
   return captured_text
 end
 
-function runJestSpec()
+local function runJestSpec()
   local spec_name = getCurrentLineText();
   return runJest(spec_name);
 end
 
-function runJestFile()
+local function runJestFile()
   return runJest(nil);
 end
 
@@ -72,7 +72,7 @@ vim.api.nvim_create_user_command('RunESLintFix', runESLintFix, {})
 ------------------------------------------------------------------------
 
 -- Zig commands
-function emitTestBin()
+local function emitTestBin()
   local filename = vim.fn.expand('%')
   local command = 'zig test -femit-bin=zig-out/bin/test ' .. filename
   vim.fn.jobstart(command, {
