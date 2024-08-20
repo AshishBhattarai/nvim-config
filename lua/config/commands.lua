@@ -89,6 +89,7 @@ local bot_term_buf_id = nil
 local bot_term_win_id = nil
 local function botTerm()
   if bot_term_win_id and vim.api.nvim_win_is_valid(bot_term_win_id) then
+    vim.cmd('wincmd p')
     vim.api.nvim_win_close(bot_term_win_id, true)
     bot_term_win_id = nil
     return

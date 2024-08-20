@@ -157,8 +157,8 @@ return {
     opts = {
       border = 'double',
       dimensions = {
-        height = 0.8, -- Height of the terminal window
-        width = 0.8,  -- Width of the terminal window
+        height = 0.7, -- Height of the terminal window
+        width = 0.7,  -- Width of the terminal window
       }
     },
     init = function()
