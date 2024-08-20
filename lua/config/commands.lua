@@ -6,7 +6,6 @@ local function runPrettier()
   local command = vim.g.js_package_manager .. ' prettier "' .. filename .. '" --write'
   vim.cmd("w")
   vim.fn.system(command)
-  -- Reopen the current file after running Prettier
   vim.cmd("e")
 end
 
@@ -15,7 +14,6 @@ local function runESLintFix()
   local command = vim.g.js_package_manager .. ' eslint "' .. filename .. '" --fix'
   vim.cmd("w")
   vim.fn.system(command)
-  -- Reopen the current file
   vim.cmd("e")
 end
 

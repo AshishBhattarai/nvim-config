@@ -7,7 +7,14 @@ local servers = {
   },
   {
     name = 'tsserver',
-    settings = {},
+    settings = {
+      on_attach = function(client, bufnr)
+        -- Disable default formatter
+        client.server_capabilities.documentFormattingProvider = false;
+        -- Use prettier on <A-f>
+        vim.keymap.set('n', '<A-f>', ':RunPrettier<CR>', { noremap = true, silent = true, buffer = bufnr })
+      end
+    },
   },
   {
     name = 'typos_lsp',
@@ -44,7 +51,7 @@ return {
   branch = 'master',
   config = function()
     local lspconfig = require('lspconfig')
-    -- TODO have configs per server to enable something like inlay-hit from tsserver
+
     for _, server in ipairs(servers) do
       lspconfig[server.name].setup(require('coq').lsp_ensure_capabilities(server.settings))
     end
@@ -66,7 +73,7 @@ return {
 
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local opts = { buffer = ev.buf }
+        local opts = { buffer = ev.buf, noremap = true }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.diagnostic.open_float, opts)
         vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, opts)
@@ -75,7 +82,10 @@ return {
         vim.keymap.set('n', 'gn', vim.lsp.buf.rename, opts)
         vim.keymap.set({ 'n', 'v' }, 'ca', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-        vim.keymap.set('n', '<A-f>', vim.lsp.buf.format, opts)
+
+        if client.server_capabilities.documentFormattingProvider then
+          vim.keymap.set('n', '<A-f>', vim.lsp.buf.format, opts)
+        end
 
         -- split jumps
         vim.keymap.set('n', '<leader>s', ':split | lua vim.lsp.buf.definition()<CR>', opts)
