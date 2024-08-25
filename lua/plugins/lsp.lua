@@ -13,7 +13,10 @@ local servers = {
         client.server_capabilities.documentFormattingProvider = false;
         -- Use prettier on <A-f>
         vim.keymap.set('n', '<A-f>', ':RunPrettier<CR>', { noremap = true, silent = true, buffer = bufnr })
-      end
+      end,
+      implicitProjectConfiguration = {
+        checkJs = true
+      },
     },
   },
   {
@@ -44,6 +47,10 @@ local servers = {
     name = 'rust_analyzer',
     settings = {},
   },
+  {
+    name = 'clangd',
+    settings = {}
+  }
 }
 
 return {
