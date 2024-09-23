@@ -6,7 +6,7 @@ local servers = {
     settings = {},
   },
   {
-    name = 'tsserver',
+    name = 'ts_ls',
     settings = {
       on_attach = function(client, bufnr)
         -- Disable default formatter
