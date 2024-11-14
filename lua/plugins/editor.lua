@@ -229,10 +229,19 @@ return {
       local dap, dapui = require('dap'), require('dapui');
       dapui.setup();
 
-      -- adapters
+      -- lldb_dap path
+      local lldb_command
+      if vim.loop.os_uname().sysname == "Linux" then
+        lldb_command = '/usr/bin/lldb-dap'
+      elseif vim.loop.os_uname().sysname == "Darwin" then
+        lldb_command = '/opt/homebrew/opt/llvm/bin/lldb-dap'
+      else
+        print("Unsupported OS for dap.adapters.lldb.command configuration")
+      end
+
       dap.adapters.lldb = {
         type = 'executable',
-        command = '/usr/bin/lldb-dap', -- adjust as needed, must be absolute path
+        command = lldb_command,
         name = 'lldb'
       }
 
