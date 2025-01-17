@@ -245,6 +245,28 @@ return {
         name = 'lldb'
       }
 
+      local js_debug_path = os.getenv("JS_DEBUG_PATH")
+      if js_debug_path then
+        dap.adapters["pwa-node"] = {
+          type = "server",
+          host = "localhost",
+          port = 9229,
+          executable = {
+            command = "node",
+            args = { js_debug_path, "9229" },
+          }
+        }
+        dap.adapters["pwa-chrome"] = {
+          type = "server",
+          host = "localhost",
+          port = 9228,
+          executable = {
+            command = "node",
+            args = { js_debug_path, "9228" },
+          }
+        }
+      end
+
       -- Debugger keymans
       vim.keymap.set('n', '<leader>dd', dap.continue);
       vim.keymap.set('n', '<leader>dc', dap.continue);
