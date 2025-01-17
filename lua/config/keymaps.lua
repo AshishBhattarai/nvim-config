@@ -13,8 +13,8 @@ vim.keymap.set('n', '#', '#``', { noremap = true });
 vim.keymap.set('n', '*', '%', { noremap = true });
 
 -- Coq keymaps
-vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = true, expr = true, noremap = false })
-vim.keymap.set('i', '<Esc>', [[pumvisible() ? "\<C-e><Esc>" : "\<Esc>"]], { expr = true, silent = true })
+vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = true, expr = true, noremap = true })
+--vim.keymap.set('i', '<Esc>', [[pumvisible() ? "\<C-e>" : "\<Esc>"]], { expr = true, noremap = true, silent = true })
 
 local function checkBackSpace()
   local col = vim.fn.col('.') - 1

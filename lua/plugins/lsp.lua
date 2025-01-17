@@ -8,12 +8,6 @@ local servers = {
   {
     name = 'ts_ls',
     settings = {
-      on_attach = function(client, bufnr)
-        -- Disable default formatter
-        client.server_capabilities.documentFormattingProvider = false;
-        -- Use prettier on <A-f>
-        vim.keymap.set('n', '<A-f>', ':RunPrettier<CR>', { noremap = true, silent = true, buffer = bufnr })
-      end,
       implicitProjectConfiguration = {
         checkJs = true
       },
@@ -69,6 +63,13 @@ return {
       callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         -- client.name - server name ie 'zls', 'tsserver', ....
+        -- ts_ls
+        if client.name == "ts_ls" then
+          -- Disable default formatter
+          client.server_capabilities.documentFormattingProvider = false;
+          -- Use prettier on <A-f>
+          vim.keymap.set('n', '<A-f>', ':RunPrettier<CR>', { noremap = true, silent = true, buffer = ev.buf })
+        end
 
         -- Enable inlay hints
         if vim.g.lsp_enable_inlay_hints and client.server_capabilities.inlayHintProvider then
