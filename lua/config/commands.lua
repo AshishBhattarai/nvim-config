@@ -1,6 +1,6 @@
 -- JS tool commands
 ------------------------------------------------------------------------
-vim.g.js_package_manager = 'npx'
+vim.g.js_package_manager = 'pnpm'
 local function runPrettier()
   local filename = vim.fn.expand('%')
   local command = vim.g.js_package_manager .. ' prettier "' .. filename .. '" --write'

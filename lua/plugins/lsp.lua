@@ -10,7 +10,7 @@ local servers = {
     settings = {
       implicitProjectConfiguration = {
         checkJs = true
-      },
+      }
     },
   },
   {
