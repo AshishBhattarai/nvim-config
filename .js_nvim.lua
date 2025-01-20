@@ -17,17 +17,27 @@ dap.configurations.typescript = {
     runtimeExecutable = "ts-node",
     sourceMaps = true,
     skipFiles = { "<node_internals>/**" },
-  }
-}
-dap.configurations.typescriptreact = {
+  },
   {
     type = "pwa-chrome",
     request = "attach",
     name = "Attach to Chrome",
-    url = "http://localhost:3000",
+    urlFilter = "http://localhost:3000/*",
     webRoot = "${workspaceFolder}",
     sourceMaps = true,
     port = 9222,
     skipFiles = { "<node_internals>/**", "node_modules/**" },
+  },
+  {
+    type = "pwa-chrome",
+    request = "launch",
+    name = "Launch Chrome",
+    url = "http://localhost:3000",
+    webRoot = "${workspaceFolder}",
+    runtimeArgs = { "--remote-debugging-port=9222" },
+    sourceMaps = true,
+    port = 9222,
+    skipFiles = { "<node_internals>/**", "node_modules/**" },
   }
-}
+};
+dap.configurations.typescriptreact = dap.configurations.typescript;
