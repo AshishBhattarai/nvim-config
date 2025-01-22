@@ -17,6 +17,7 @@ vim.g.coq_settings = {
   ["clients.snippets.warn"] = { "outdated" },
   ["display.ghost_text.enabled"] = false,
   ["keymap.recommended"] = false,
+  ["keymap.manual_complete_insertion_only"] = true,
   ["clients.buffers.same_filetype"] = true,
   ["clients.lsp.weight_adjust"] = 2.0,
   ["weights.prefix_matches"] = 20.0,

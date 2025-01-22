@@ -1,3 +1,4 @@
+-- https://lazy.folke.io/spec#spec-setup
 return {
   {
     'sainnhe/gruvbox-material',
@@ -67,6 +68,7 @@ return {
       vim.keymap.set('n', '<A-p>', builtin.find_files, {})
       vim.keymap.set('n', '<A-P>', builtin.live_grep, {})
       vim.keymap.set('n', '<leader>f', builtin.current_buffer_fuzzy_find, {})
+      vim.keymap.set('n', '<leader>b', builtin.buffers, {})
       vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
     end
   },
@@ -245,7 +247,7 @@ return {
         name = 'lldb'
       }
 
-      local js_debug_path = os.getenv("JS_DEBUG_PATH")
+      local js_debug_path = vim.env.JS_DEBUG_PATH
       if js_debug_path then
         dap.adapters["pwa-node"] = {
           type = "server",
@@ -337,5 +339,27 @@ return {
       vim.keymap.set("n", "<leader>ut", ':UndotreeToggle<CR>');
       vim.keymap.set("n", "<leader>up", ':UndotreePersistUndo<CR>');
     end
+  },
+  {
+    "nvim-neorg/neorg",
+    lazy = false,
+    version = "*",
+    opts = {
+      load = {
+        ["core.defaults"] = {},
+        ["core.concealer"] = {},
+        ["core.dirman"] = {
+          config = {
+            workspaces = {
+              notes = "~/Documents/notes/neorg/notes",
+              office = "~/Documents/notes/neorg/kittl",
+              project = "~/Documents/notes/neorg/projekt_inception",
+            },
+            default_workspace = "notes",
+          },
+        },
+      },
+    },
+    config = true,
   }
 }

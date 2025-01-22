@@ -122,3 +122,60 @@ vim.keymap.set('t', '<A-3>', botTermWinToggle, { silent = true });
 vim.keymap.set('n', '<A-3>', botTermWinToggle, { silent = true });
 vim.keymap.set('n', '<A-2>', botTerm, { silent = true });
 vim.keymap.set('t', '<A-2>', botTerm, { silent = true });
+
+
+-- Neorg git sync
+vim.api.nvim_create_user_command('NeorgSync', function()
+  local repo_path = vim.env.NEORG_NOTES_REPO
+  if not repo_path then
+    vim.notify("NEORG_NOTES_REPO environment variable is not set!", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Get current datetime
+  local datetime = os.date("%Y-%m-%d %H:%M:%S")
+
+  -- Define Git commands
+  local function git_command(args, callback)
+    vim.system({ "git", "-C", repo_path, unpack(args) }, { text = true }, function(result)
+      if callback then callback(result) end
+    end)
+  end
+
+  -- Step 1: Pull with rebase
+  git_command({ "pull", "--rebase" }, function(result)
+    if string.find(result.stdout, "CONFLICT") then
+      vim.schedule(function()
+        vim.notify("Git rebase conflict detected! Resolve conflicts before syncing.", vim.log.levels.ERROR)
+      end)
+      return
+    end
+
+    -- Step 2: Check if there are any changes
+    git_command({ "status", "--porcelain" }, function(status_result)
+      if status_result.stdout == "" then
+        vim.schedule(function()
+          vim.notify("No changes to sync.", vim.log.levels.INFO)
+        end)
+        return
+      end
+
+      -- Step 3: Stage, commit, and push
+      git_command({ "add", "." }, function()
+        git_command({ "commit", "-m", "syncing notes " .. datetime }, function(commit_result)
+          if string.find(commit_result.stdout, "nothing to commit") then
+            vim.schedule(function()
+              vim.notify("No changes to commit.", vim.log.levels.INFO)
+            end)
+            return
+          end
+          git_command({ "push", "origin", "main" }, function()
+            vim.schedule(function()
+              vim.notify("Neorg notes synced successfully!", vim.log.levels.INFO)
+            end)
+          end)
+        end)
+      end)
+    end)
+  end)
+end, {})
