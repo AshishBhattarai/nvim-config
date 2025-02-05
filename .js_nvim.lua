@@ -1,4 +1,7 @@
-vim.g.js_package_manager = 'pnpm'
+-- trailing space is required
+vim.g.js_test_runner = 'pnpm jest '
+vim.g.js_format_runner = 'pnpm prettier '
+vim.g.js_lint_runner = 'pnpm eslint '
 
 vim.keymap.set('n', '<A-F>', ':RunPrettier<CR>', { silent = true })
 vim.keymap.set('n', '<leader>tf', ':RunJest<CR>', { silent = true })

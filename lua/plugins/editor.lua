@@ -347,7 +347,11 @@ return {
     opts = {
       load = {
         ["core.defaults"] = {},
-        ["core.concealer"] = {},
+        ["core.concealer"] = {
+          config = {
+            icon_preset = "varied",
+          },
+        },
         ["core.dirman"] = {
           config = {
             workspaces = {

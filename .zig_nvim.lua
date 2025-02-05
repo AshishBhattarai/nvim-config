@@ -7,8 +7,7 @@ vim.filetype.add({
   }
 })
 
-local dap = require('dap')
-dap.configurations.zig = {
+require('dap').configurations.zig = {
   {
     name = 'Launch',
     type = 'lldb',
