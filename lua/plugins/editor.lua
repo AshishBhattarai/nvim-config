@@ -93,7 +93,15 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     branch = 'master',
-    build = ':TSUpdate'
+    build = ':TSUpdate',
+    opts = {
+      highlight = {
+        enable = true
+      }
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts);
+    end
   },
   {
     "kylechui/nvim-surround",
@@ -278,7 +286,7 @@ return {
       vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint);
       vim.keymap.set('n', '<leader>dB', dap.clear_breakpoints);
       vim.keymap.set('n', '<leader>dl', dap.list_breakpoints);
-      vim.keymap.set({'n', 'v'}, '<leader>de', dapui.eval);
+      vim.keymap.set({ 'n', 'v' }, '<leader>de', dapui.eval);
       vim.keymap.set('n', '<leader>dr', dap.restart);
       vim.keymap.set('n', '<leader>dp', dap.pause);
       --

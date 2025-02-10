@@ -5,6 +5,9 @@ vim.o.encoding = 'utf-8'
 vim.o.fileencoding = 'utf-8'
 vim.o.fileencodings = 'utf-8'
 
+-- conceal level
+vim.opt.conceallevel = 2
+
 -- tab size
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2

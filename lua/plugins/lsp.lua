@@ -21,10 +21,10 @@ local servers = {
     name = 'glsl_analyzer',
     settings = {},
   },
-  {
-    name = 'tailwindcss',
-    settings = {},
-  },
+  -- {
+  --   name = 'tailwindcss',
+  --   settings = {},
+  -- },
   {
     name = 'lua_ls',
     settings = {
