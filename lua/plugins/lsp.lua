@@ -63,13 +63,20 @@ return {
       callback = function(ev)
         local client = vim.lsp.get_client_by_id(ev.data.client_id)
         -- client.name - server name ie 'zls', 'tsserver', ....
+
         -- ts_ls
         if client.name == "ts_ls" then
           -- Disable default formatter
           client.server_capabilities.documentFormattingProvider = false;
           -- Use prettier on <A-f>
           vim.keymap.set('n', '<A-f>', ':RunPrettier<CR>', { noremap = true, silent = true, buffer = ev.buf })
+        elseif client.name == "glsl_analyzer" then
+          client.cancel_request = function()
+            -- glsl_analyzer doesn't handle cancel_request proplery yet
+            -- https://github.com/nolanderc/glsl_analyzer/issues/68
+          end
         end
+
 
         -- Enable inlay hints
         if vim.g.lsp_enable_inlay_hints and client.server_capabilities.inlayHintProvider then
