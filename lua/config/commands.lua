@@ -145,7 +145,7 @@ vim.api.nvim_create_user_command('NeorgSync', function()
   end
 
   -- Step 1: Pull with rebase
-  git_command({ "pull", "--rebase" }, function(result)
+  git_command({ "pull", "origin", "main", "--rebase" }, function(result)
     if string.find(result.stdout, "CONFLICT") then
       vim.schedule(function()
         vim.notify("Git rebase conflict detected! Resolve conflicts before syncing.", vim.log.levels.ERROR)
