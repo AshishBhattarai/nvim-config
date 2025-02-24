@@ -94,9 +94,34 @@ return {
     'nvim-treesitter/nvim-treesitter',
     branch = 'master',
     build = ':TSUpdate',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects'
+    },
     opts = {
       highlight = {
         enable = true
+      },
+      textobjects = {
+        move = {
+          enable = true,
+          set_jumps = true, -- set jumps in the jumplist
+          goto_next_start = {
+            [']m'] = '@function.outer',
+            [']]'] = '@class.outer',
+          },
+          goto_next_end = {
+            [']M'] = '@function.outer',
+            [']['] = '@class.outer',
+          },
+          goto_previous_start = {
+            ['[m'] = '@function.outer',
+            ['[['] = '@class.outer',
+          },
+          goto_previous_end = {
+            ['[M'] = '@function.outer',
+            ['[]'] = '@class.outer',
+          },
+        }
       }
     },
     config = function(_, opts)

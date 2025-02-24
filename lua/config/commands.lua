@@ -4,16 +4,16 @@ vim.g.js_test_runner = 'pnpm jest '
 vim.g.js_format_runner = 'pnpm prettier '
 vim.g.js_lint_runner = 'pnpm eslint '
 local function runPrettier()
-  local filename = vim.fn.expand('%')
-  local command = vim.g.js_format_runner .. '"' .. filename .. '" --write'
+  local file_path = vim.fn.expand('%')
+  local command = vim.g.js_format_runner .. '"' .. file_path .. '" --write'
   vim.cmd("w")
   vim.fn.system(command)
   vim.cmd("e")
 end
 
 local function runESLintFix()
-  local filename = vim.fn.expand('%')
-  local command = vim.g.js_lint_runner .. '"' .. filename .. '" --fix'
+  local file_path = vim.fn.expand('%')
+  local command = vim.g.js_lint_runner .. '"' .. file_path .. '" --fix'
   vim.cmd("w")
   vim.fn.system(command)
   vim.cmd("e")
@@ -22,8 +22,9 @@ end
 local js_terminal_buffer = nil
 
 local function runESLint()
-  local fname = vim.fn.expand('%')
-  local command = vim.g.js_lint_runner .. fname
+  local file_path = vim.fn.expand('%')
+  local file_name = vim.fn.fnamemodify(file_path, ':t')
+  local command = vim.g.js_lint_runner .. file_path
   -- If terminal buffer exists, delete it
   if js_terminal_buffer and vim.api.nvim_buf_is_valid(js_terminal_buffer) then
     vim.cmd(js_terminal_buffer .. 'bdelete!')
@@ -31,13 +32,15 @@ local function runESLint()
   -- Open a new split terminal buffer and execute the Jest command
   vim.cmd('split | terminal ' .. command)
   js_terminal_buffer = vim.fn.bufnr('%')
+  vim.api.nvim_buf_set_name(js_terminal_buffer, "Lint " .. file_name)
   vim.cmd('wincmd p')
 end
 
 local function runJest(spec_name)
-  local fname = vim.fn.expand('%:p')
-  local test_name = spec_name and ' -t "' .. spec_name .. '"' or ''
-  local command = vim.g.js_test_runner .. '"' .. fname .. '"' .. test_name
+  local file_path = vim.fn.expand('%:p')
+  local file_name = vim.fn.fnamemodify(file_path, ':t')
+  local test_opts = spec_name and ' -t "' .. spec_name .. '"' or ''
+  local command = vim.g.js_test_runner .. '"' .. file_path .. '"' .. test_opts
   -- If terminal buffer exists, delete it
   if js_terminal_buffer and vim.api.nvim_buf_is_valid(js_terminal_buffer) then
     vim.cmd(js_terminal_buffer .. 'bdelete!')
@@ -45,6 +48,7 @@ local function runJest(spec_name)
   -- Open a new split terminal buffer and execute the Jest command
   vim.cmd('split | terminal ' .. command)
   js_terminal_buffer = vim.fn.bufnr('%')
+  vim.api.nvim_buf_set_name(js_terminal_buffer, "Spec " .. file_name .. test_opts)
   vim.cmd('wincmd p')
 end
 
@@ -73,8 +77,8 @@ vim.api.nvim_create_user_command('RunESLintFix', runESLintFix, {})
 
 -- Zig commands
 local function emitTestBin()
-  local filename = vim.fn.expand('%')
-  local command = 'zig test -femit-bin=zig-out/bin/test ' .. filename
+  local file_path = vim.fn.expand('%')
+  local command = 'zig test -femit-bin=zig-out/bin/test ' .. file_path
   vim.fn.jobstart(command, {
     stdout_buffered = true,
     stderr_buffered = true,
