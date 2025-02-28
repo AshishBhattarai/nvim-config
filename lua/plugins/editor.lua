@@ -3,10 +3,13 @@ return {
   {
     'sainnhe/gruvbox-material',
     branch = 'master',
-    config = function()
+    lazy = false,
+    init = function()
       vim.opt.termguicolors = true
       vim.g.gruvbox_material_background = 'hard'
-      vim.cmd 'colorscheme gruvbox-material'
+      vim.g.gruvbox_material_enable_italic = true
+      -- vim.g.gruvbox_material_better_performance = 1
+      vim.cmd.colorscheme('gruvbox-material')
     end
   },
   {
@@ -16,7 +19,7 @@ return {
   {
     'itchyny/lightline.vim',
     branch = 'master',
-    config = function()
+    init = function()
       vim.g.lightline = {
         colorscheme = 'ayu_dark'
       }
@@ -375,15 +378,13 @@ return {
     end
   },
   {
-    'mbbill/undotree',
-    branch = 'master',
+    dir = '/Users/ashish/Documents/Projects/undotree',
     config = function()
       vim.g.undotree_CustomUndotreeCmd = 'bot horizontal 32 new'
       vim.g.undotree_CustomDiffpanelCmd = 'belowright 12 new'
       vim.g.undotree_SetFocusWhenToggle = 1;
 
       vim.keymap.set("n", "<leader>ut", ':UndotreeToggle<CR>');
-      vim.keymap.set("n", "<leader>up", ':UndotreePersistUndo<CR>');
     end
   },
   {
