@@ -380,8 +380,8 @@ return {
   {
     dir = '/Users/ashish/Documents/Projects/undotree',
     config = function()
-      vim.g.undotree_CustomUndotreeCmd = 'bot horizontal 32 new'
-      vim.g.undotree_CustomDiffpanelCmd = 'belowright 12 new'
+      vim.g.undotree_CustomUndotreeCmd = 'botright vertical 64 new'
+      vim.g.undotree_CustomDiffpanelCmd = 'belowright horizontal 24 new'
       vim.g.undotree_SetFocusWhenToggle = 1;
 
       vim.keymap.set("n", "<leader>ut", ':UndotreeToggle<CR>');
