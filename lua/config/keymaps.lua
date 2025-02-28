@@ -17,6 +17,7 @@ vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = t
 --vim.keymap.set('i', '<Esc>', [[pumvisible() ? "\<C-e>" : "\<Esc>"]], { expr = true, noremap = true, silent = true })
 
 local function checkBackSpace()
+  -- check if cursor is at start line or the cursor is on whitespace
   local col = vim.fn.col('.') - 1
   return col <= 0 or vim.fn.getline('.'):sub(col, col):match('%s')
 end
@@ -26,11 +27,12 @@ local function esc(cmd)
 end
 
 local function tabCompletion()
-  if vim.fn.pumvisible() > 0 then
+  local is_whitespace = checkBackSpace();
+  if is_whitespace then
+    return esc('<TAB>')
+  elseif vim.fn.pumvisible() > 0 then
     local key = vim.fn.complete_info().selected == -1 and '<C-n><C-y>' or '<C-y>'
     return esc(key)
-  elseif checkBackSpace() then
-    return esc('<TAB>')
   else
     return esc('<C-x><C-u>')
   end

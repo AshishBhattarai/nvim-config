@@ -256,6 +256,19 @@ return {
     branch = 'coq',
     build = 'python3 -m coq deps',
     dependencies = { 'ms-jpq/coq.artifacts', 'ms-jpq/coq.thirdparty' },
+    init = function()
+      vim.g.coq_settings = {
+        auto_start = 'shut-up',
+        ["clients.snippets.warn"] = { "outdated" },
+        ["display.ghost_text.enabled"] = false,
+        ["keymap.recommended"] = false,
+        ["keymap.manual_complete_insertion_only"] = true,
+        ["keymap.repeat"] = ',',
+        ["clients.buffers.same_filetype"] = true,
+        ["clients.lsp.weight_adjust"] = 2.0,
+        ["weights.prefix_matches"] = 20.0,
+      }
+    end
   },
   {
     'rcarriga/nvim-dap-ui',
