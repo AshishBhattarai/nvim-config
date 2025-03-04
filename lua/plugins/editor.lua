@@ -378,7 +378,8 @@ return {
     end
   },
   {
-    dir = '/Users/ashish/Documents/Projects/undotree',
+    'mbbill/undotree',
+    branch = 'master',
     config = function()
       vim.g.undotree_CustomUndotreeCmd = 'botright vertical 64 new'
       vim.g.undotree_CustomDiffpanelCmd = 'belowright horizontal 24 new'
