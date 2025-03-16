@@ -73,6 +73,7 @@ return {
       vim.keymap.set('n', '<leader>f', builtin.current_buffer_fuzzy_find, {})
       vim.keymap.set('n', '<leader>b', builtin.buffers, {})
       vim.keymap.set('n', '<leader>h', builtin.help_tags, {})
+      vim.keymap.set('n', '<leader>:', builtin.commands, {})
     end
   },
   {
@@ -400,6 +401,7 @@ return {
             icon_preset = "varied",
           },
         },
+        ["core.export"] = {},
         ["core.dirman"] = {
           config = {
             workspaces = {
@@ -413,5 +415,10 @@ return {
       },
     },
     config = true,
-  }
+  },
+  -- {
+  --   "3rd/image.nvim",
+  --   dependencies = { "luarocks.nvim" },
+  --   opts = {}
+  -- },
 }
