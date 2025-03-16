@@ -17,5 +17,15 @@ require('dap').configurations.zig = {
     stopOnEntry = false,
     args = {},
   },
+  {
+    name = 'Attach',
+    type = 'lldb',
+    request = 'attach',
+    program = '${workspaceFolder}/zig-out/bin/project_inception',
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+  },
 }
+
 -- zig test -femit-bin=zig-out/bin/test src/dsa/sparse.zig
