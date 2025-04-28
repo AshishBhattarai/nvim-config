@@ -2,6 +2,13 @@ vim.g.lsp_enable_inlay_hints = false;
 
 local servers = {
   {
+    name = 'typos_lsp',
+    root_dir = function()
+      return vim.loop.cwd()
+    end,
+    settings = {},
+  },
+  {
     name = 'zls',
     settings = {},
   },
@@ -12,10 +19,6 @@ local servers = {
         checkJs = true
       }
     },
-  },
-  {
-    name = 'typos_lsp',
-    settings = {},
   },
   {
     name = 'glsl_analyzer',

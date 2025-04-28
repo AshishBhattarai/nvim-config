@@ -89,9 +89,11 @@ vim.api.nvim_create_user_command('EmitTestBin', emitTestBin, {})
 ------------------------------------------------------------------------
 
 -- Editor commands
+vim.g.bot_term_size = '14';
 local bot_term_buf_id = nil
 local bot_term_win_id = nil
 local function botTerm()
+  -- have valid window id and buffer id
   if bot_term_win_id and vim.api.nvim_win_is_valid(bot_term_win_id) then
     vim.cmd('wincmd p')
     vim.api.nvim_win_close(bot_term_win_id, true)
@@ -99,12 +101,17 @@ local function botTerm()
     return
   end
 
+  -- only have valid buffer id
   if bot_term_buf_id and vim.api.nvim_buf_is_valid(bot_term_buf_id) then
-    vim.cmd('bot split | b ' .. bot_term_buf_id .. ' | resize 14')
+    vim.cmd('bot split | b ' .. bot_term_buf_id .. ' | resize ' .. vim.g.bot_term_size)
   else
-    vim.cmd('bot split | resize 14 | terminal')
+    -- start a new terminal
+    vim.cmd('bot split | resize ' .. vim.g.bot_term_size .. ' | terminal')
+    vim.cmd('setlocal nospell')
     bot_term_buf_id = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_name(bot_term_buf_id, "BotTermX")
   end
+
   bot_term_win_id = vim.api.nvim_get_current_win()
   vim.cmd('startinsert')
 end
