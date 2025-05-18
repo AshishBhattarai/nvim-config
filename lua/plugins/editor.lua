@@ -269,8 +269,8 @@ return {
         ["keymap.manual_complete_insertion_only"] = true,
         ["keymap.repeat"] = ',',
         ["clients.buffers.same_filetype"] = true,
-        ["clients.lsp.weight_adjust"] = 2.0,
-        ["weights.prefix_matches"] = 20.0,
+        ["clients.lsp.weight_adjust"] = 1.4,
+        ["completion.sticky_manual"] = true
       }
     end
   },
