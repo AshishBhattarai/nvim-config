@@ -151,48 +151,65 @@ vim.api.nvim_create_user_command('NeorgSync', function()
   -- Define Git commands
   local function git_command(args, callback)
     vim.system({ "git", "-C", repo_path, unpack(args) }, { text = true }, function(result)
-      if callback then callback(result) end
+      if result.code ~= 0 then
+        local err = result.stderr or "Unknown error"
+        vim.schedule(function()
+          vim.notify("Sync Failed: " .. err, vim.log.levels.ERROR)
+        end)
+      elseif callback then
+        callback(result)
+      end
     end)
   end
 
-  -- Step 1: Pull with rebase
-  git_command({ "pull", "origin", "main", "--rebase" }, function(result)
-    if string.find(result.stdout, "CONFLICT") then
-      vim.schedule(function()
-        vim.notify("Git rebase conflict detected! Resolve conflicts before syncing.", vim.log.levels.ERROR)
-      end)
-      return
-    elseif string.find(result.stdout, "Fast%-forward") then
-      vim.schedule(function()
-        vim.notify("Neorg notes pulled successfully", vim.log.levels.INFO)
-      end)
-    end
-
-    -- Step 2: Check if there are any changes
-    git_command({ "status", "--porcelain" }, function(status_result)
-      if status_result.stdout == "" then
+  local function git_pull_rebase(callback)
+    git_command({ "pull", "origin", "main", "--rebase" }, function(result)
+      if string.find(result.stdout, "CONFLICT") then
         vim.schedule(function()
-          vim.notify("No changes to push.", vim.log.levels.INFO)
+          vim.notify("Git rebase conflict detected! Resolve conflicts before syncing.", vim.log.levels.ERROR)
         end)
-        return
+      elseif string.find(result.stdout, "Fast%-forward") then
+        vim.schedule(function()
+          vim.notify("Neorg notes pulled successfully", vim.log.levels.INFO)
+        end)
+        if callback then callback() end
       end
+    end)
+  end
 
-      -- Step 3: Stage, commit, and push
+  -- Step 2: Check if there are any changes
+  git_command({ "status", "--porcelain" }, function(status_result)
+    if status_result.stdout == "" then
+      vim.schedule(function()
+        vim.notify("No changes to push.", vim.log.levels.INFO)
+      end)
+      git_pull_rebase();
+    else
       git_command({ "add", "." }, function()
         git_command({ "commit", "-m", "syncing notes " .. datetime }, function(commit_result)
+          -- no changes to commit
           if string.find(commit_result.stdout, "nothing to commit") then
             vim.schedule(function()
               vim.notify("No changes to commit.", vim.log.levels.INFO)
             end)
-            return
           end
-          git_command({ "push", "origin", "main" }, function()
-            vim.schedule(function()
-              vim.notify("Neorg notes pushed successfully!", vim.log.levels.INFO)
+          -- rebase and then push
+          git_pull_rebase(function()
+            -- Call push anyway if we get to this point
+            git_command({ "push", "origin", "main" }, function(push_result)
+              if string.find(push_result.stdout, "Everything up-to-date") then
+                vim.schedule(function()
+                  vim.notify("Everything up-to-date", vim.log.levels.INFO)
+                end)
+              else
+                vim.schedule(function()
+                  vim.notify("Neorg notes pushed successfully!", vim.log.levels.INFO)
+                end)
+              end
             end)
           end)
         end)
       end)
-    end)
+    end
   end)
 end, {})
