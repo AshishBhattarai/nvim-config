@@ -168,10 +168,12 @@ vim.api.nvim_create_user_command('NeorgSync', function()
         vim.schedule(function()
           vim.notify("Git rebase conflict detected! Resolve conflicts before syncing.", vim.log.levels.ERROR)
         end)
-      elseif string.find(result.stdout, "Fast%-forward") then
-        vim.schedule(function()
-          vim.notify("Neorg notes pulled successfully", vim.log.levels.INFO)
-        end)
+      else
+        if string.find(result.stdout, "Fast%-forward") then
+          vim.schedule(function()
+            vim.notify("Neorg notes pulled successfully", vim.log.levels.INFO)
+          end)
+        end
         if callback then callback() end
       end
     end)
@@ -181,7 +183,7 @@ vim.api.nvim_create_user_command('NeorgSync', function()
   git_command({ "status", "--porcelain" }, function(status_result)
     if status_result.stdout == "" then
       vim.schedule(function()
-        vim.notify("No changes to push.", vim.log.levels.INFO)
+        vim.notify("No changes to commit.", vim.log.levels.INFO)
       end)
       git_pull_rebase();
     else
