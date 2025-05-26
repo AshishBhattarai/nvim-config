@@ -1,4 +1,4 @@
-GuiFont Hack Nerd Font Mono:h12
+GuiFont JetBrainsMono Nerd Font:h10
 
 nnoremap <silent><RightMouse> :call GuiShowContextMenu()<CR>
 inoremap <silent><RightMouse> <Esc>:call GuiShowContextMenu()<CR>
