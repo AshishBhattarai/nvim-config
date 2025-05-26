@@ -42,3 +42,5 @@ esac
 # pnpm end
 
 eval "$(fzf --bash)"
+
+export PATH="$PATH:/home/ashish/.local/bin"
