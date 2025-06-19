@@ -347,7 +347,16 @@ return {
 
       vim.api.nvim_create_user_command('DapUiToggle', function()
         dapui.toggle()
-      end, {});
+      end, {
+        desc = "Toggle nvim-dap-ui"
+      });
+
+      vim.api.nvim_create_user_command("DapBreak", function(opts)
+        dap.set_breakpoint(opts.args)
+      end, {
+        nargs = 1,
+        desc = "Set conditional breakpoint with nvim-dap"
+      })
     end
   },
   {
