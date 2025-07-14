@@ -1,4 +1,4 @@
-vim.g.lsp_enable_inlay_hints = false;
+vim.g.lsp_enable_inlay_hints = false
 
 local servers = {
   {
@@ -70,7 +70,7 @@ return {
         -- ts_ls
         if client.name == "ts_ls" then
           -- Disable default formatter
-          client.server_capabilities.documentFormattingProvider = false;
+          client.server_capabilities.documentFormattingProvider = false
           -- Use prettier on <A-f>
           vim.keymap.set('n', '<A-f>', ':RunPrettier<CR>', { noremap = true, silent = true, buffer = ev.buf })
         elseif client.name == "glsl_analyzer" then
@@ -112,6 +112,6 @@ return {
           [[<Cmd>let save_pos = getpos('.')<CR>:tabnew %<CR>:execute 'normal! ' . save_pos[1] . 'G' . save_pos[2] . '|'<CR>:lua vim.lsp.buf.definition()<CR>]],
           opts)
       end,
-    });
+    })
   end
 }

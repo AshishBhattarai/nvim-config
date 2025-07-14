@@ -9,7 +9,7 @@ vim.keymap.set('n', '<C-j>', ':cn<CR>', { silent = true })
 vim.keymap.set('n', '<C-k>', ':cp<CR>', { silent = true })
 
 -- Remap # and *
-vim.keymap.set('n', '#', '#``', { noremap = true });
+vim.keymap.set('n', '#', '#``', { noremap = true })
 
 -- Coq keymaps
 vim.keymap.set('i', '<TAB>', 'v:lua.user_keymaps.tab_completion()', { silent = true, expr = true, noremap = true })
@@ -26,7 +26,7 @@ local function esc(cmd)
 end
 
 local function tabCompletion()
-  local is_whitespace = checkBackSpace();
+  local is_whitespace = checkBackSpace()
   if is_whitespace then
     return esc('<TAB>')
   elseif vim.fn.pumvisible() > 0 then

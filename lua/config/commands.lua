@@ -1,3 +1,13 @@
+local function delete_buffer(name)
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_get_name(buf):match(name) then
+      vim.api.nvim_buf_delete(buf, { force = true })
+      return
+    end
+  end
+end
+
+
 -- JS tool commands
 ------------------------------------------------------------------------
 vim.g.js_test_runner = 'pnpm jest '
@@ -20,20 +30,46 @@ local function runESLintFix()
 end
 
 local js_terminal_buffer = nil
+local function openJSTerminalWithCommand(command, name)
+  local cwd = vim.fn.getcwd()
+  local original_win = vim.api.nvim_get_current_win()
+  local target_win = nil
+
+  -- Handle existing terminal buffer
+  if js_terminal_buffer and vim.api.nvim_buf_is_valid(js_terminal_buffer) then
+    local win_ids = vim.fn.win_findbuf(js_terminal_buffer)
+    if #win_ids > 0 then
+      target_win = win_ids[1]
+      vim.api.nvim_set_current_win(target_win)
+      local tmp_buf = vim.api.nvim_create_buf(false, true)
+      vim.api.nvim_win_set_buf(target_win, tmp_buf)
+    end
+    vim.api.nvim_buf_delete(js_terminal_buffer, { force = true })
+  end
+
+  -- Create new split and terminal
+  if not (target_win and vim.api.nvim_win_is_valid(target_win)) then
+    delete_buffer(name)
+    vim.cmd("split")
+    target_win = vim.api.nvim_get_current_win()
+    local term_buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_win_set_buf(target_win, term_buf)
+  end
+
+  vim.fn.termopen(command, { cwd = cwd })
+
+  js_terminal_buffer = vim.api.nvim_get_current_buf()
+  vim.api.nvim_buf_set_name(js_terminal_buffer, name)
+
+  -- Return focus to original window
+  vim.api.nvim_set_current_win(original_win)
+end
 
 local function runESLint()
   local file_path = vim.fn.expand('%')
   local file_name = vim.fn.fnamemodify(file_path, ':t')
   local command = vim.g.js_lint_runner .. file_path
-  -- If terminal buffer exists, delete it
-  if js_terminal_buffer and vim.api.nvim_buf_is_valid(js_terminal_buffer) then
-    vim.cmd(js_terminal_buffer .. 'bdelete!')
-  end
-  -- Open a new split terminal buffer and execute the Jest command
-  vim.cmd('split | terminal ' .. command)
-  js_terminal_buffer = vim.fn.bufnr('%')
-  vim.api.nvim_buf_set_name(js_terminal_buffer, "Lint " .. file_name)
-  vim.cmd('wincmd p')
+  openJSTerminalWithCommand(command, "Lint " .. file_name)
 end
 
 local function runJest(spec_name)
@@ -41,15 +77,7 @@ local function runJest(spec_name)
   local file_name = vim.fn.fnamemodify(file_path, ':t')
   local test_opts = spec_name and ' -t "' .. spec_name .. '"' or ''
   local command = vim.g.js_test_runner .. '"' .. file_path .. '"' .. test_opts
-  -- If terminal buffer exists, delete it
-  if js_terminal_buffer and vim.api.nvim_buf_is_valid(js_terminal_buffer) then
-    vim.cmd(js_terminal_buffer .. 'bdelete!')
-  end
-  -- Open a new split terminal buffer and execute the Jest command
-  vim.cmd('split | terminal ' .. command)
-  js_terminal_buffer = vim.fn.bufnr('%')
-  vim.api.nvim_buf_set_name(js_terminal_buffer, "Spec " .. file_name .. test_opts)
-  vim.cmd('wincmd p')
+  openJSTerminalWithCommand(command, "Spec " .. file_name)
 end
 
 local function getCurrentLineText()
@@ -60,12 +88,12 @@ local function getCurrentLineText()
 end
 
 local function runJestSpec()
-  local spec_name = getCurrentLineText();
-  return runJest(spec_name);
+  local spec_name = getCurrentLineText()
+  return runJest(spec_name)
 end
 
 local function runJestFile()
-  return runJest(nil);
+  return runJest(nil)
 end
 
 vim.api.nvim_create_user_command('RunPrettier', runPrettier, {})
@@ -89,7 +117,7 @@ vim.api.nvim_create_user_command('EmitTestBin', emitTestBin, {})
 ------------------------------------------------------------------------
 
 -- Editor commands
-vim.g.bot_term_size = '14';
+vim.g.bot_term_size = '14'
 local bot_term_buf_id = nil
 local bot_term_win_id = nil
 local function botTerm()
@@ -106,6 +134,7 @@ local function botTerm()
     vim.cmd('bot split | b ' .. bot_term_buf_id .. ' | resize ' .. vim.g.bot_term_size)
   else
     -- start a new terminal
+    delete_buffer('BotTermX')
     vim.cmd('bot split | resize ' .. vim.g.bot_term_size .. ' | terminal')
     vim.cmd('setlocal nospell')
     bot_term_buf_id = vim.api.nvim_get_current_buf()
@@ -131,10 +160,10 @@ local function botTermWinToggle()
 end
 
 vim.api.nvim_create_user_command('BotTerm', botTerm, {})
-vim.keymap.set('t', '<A-3>', botTermWinToggle, { silent = true });
-vim.keymap.set('n', '<A-3>', botTermWinToggle, { silent = true });
-vim.keymap.set('n', '<A-2>', botTerm, { silent = true });
-vim.keymap.set('t', '<A-2>', botTerm, { silent = true });
+vim.keymap.set('t', '<A-3>', botTermWinToggle, { silent = true })
+vim.keymap.set('n', '<A-3>', botTermWinToggle, { silent = true })
+vim.keymap.set('n', '<A-2>', botTerm, { silent = true })
+vim.keymap.set('t', '<A-2>', botTerm, { silent = true })
 
 
 -- Neorg git sync
@@ -185,7 +214,7 @@ vim.api.nvim_create_user_command('NeorgSync', function()
       vim.schedule(function()
         vim.notify("No changes to commit.", vim.log.levels.INFO)
       end)
-      git_pull_rebase();
+      git_pull_rebase()
     else
       git_command({ "add", "." }, function()
         git_command({ "commit", "-m", "syncing notes " .. datetime }, function(commit_result)

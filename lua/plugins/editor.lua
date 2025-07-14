@@ -129,7 +129,7 @@ return {
       }
     },
     config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts);
+      require("nvim-treesitter.configs").setup(opts)
     end
   },
   {
@@ -278,8 +278,8 @@ return {
     'rcarriga/nvim-dap-ui',
     dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
     config = function()
-      local dap, dapui = require('dap'), require('dapui');
-      dapui.setup();
+      local dap, dapui = require('dap'), require('dapui')
+      dapui.setup()
 
       -- lldb_dap path
       local lldb_command
@@ -320,17 +320,17 @@ return {
       end
 
       -- Debugger keymans
-      vim.keymap.set('n', '<leader>dd', dap.continue);
-      vim.keymap.set('n', '<leader>dc', dap.continue);
-      vim.keymap.set('n', '<leader>dn', dap.step_over);
-      vim.keymap.set('n', '<leader>di', dap.step_into);
-      vim.keymap.set('n', '<leader>do', dap.step_out);
-      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint);
-      vim.keymap.set('n', '<leader>dB', dap.clear_breakpoints);
-      vim.keymap.set('n', '<leader>dl', dap.list_breakpoints);
-      vim.keymap.set({ 'n', 'v' }, '<leader>de', dapui.eval);
-      vim.keymap.set('n', '<leader>dr', dap.restart);
-      vim.keymap.set('n', '<leader>dp', dap.pause);
+      vim.keymap.set('n', '<leader>dd', dap.continue)
+      vim.keymap.set('n', '<leader>dc', dap.continue)
+      vim.keymap.set('n', '<leader>dn', dap.step_over)
+      vim.keymap.set('n', '<leader>di', dap.step_into)
+      vim.keymap.set('n', '<leader>do', dap.step_out)
+      vim.keymap.set('n', '<leader>db', dap.toggle_breakpoint)
+      vim.keymap.set('n', '<leader>dB', dap.clear_breakpoints)
+      vim.keymap.set('n', '<leader>dl', dap.list_breakpoints)
+      vim.keymap.set({ 'n', 'v' }, '<leader>de', dapui.eval)
+      vim.keymap.set('n', '<leader>dr', dap.restart)
+      vim.keymap.set('n', '<leader>dp', dap.pause)
       --
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
@@ -349,7 +349,7 @@ return {
         dapui.toggle()
       end, {
         desc = "Toggle nvim-dap-ui"
-      });
+      })
 
       vim.api.nvim_create_user_command("DapBreak", function(opts)
         dap.set_breakpoint(opts.args)
@@ -364,7 +364,7 @@ return {
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
     config = function()
-      local harpoon = require('harpoon');
+      local harpoon = require('harpoon')
       -- REQUIRED
       harpoon:setup()
       -- REQUIRED
@@ -397,9 +397,12 @@ return {
     config = function()
       vim.g.undotree_CustomUndotreeCmd = 'botright vertical 64 new'
       vim.g.undotree_CustomDiffpanelCmd = 'belowright horizontal 24 new'
-      vim.g.undotree_SetFocusWhenToggle = 1;
+      vim.g.undotree_SetFocusWhenToggle = 1
+      vim.cmd([[
+        let g:undotree_DisabledFiletypes = ['terminal', 'prompt']
+      ]])
 
-      vim.keymap.set("n", "<leader>ut", ':UndotreeToggle<CR>');
+      vim.keymap.set("n", "<leader>ut", ':UndotreeToggle<CR>')
     end
   },
   {
