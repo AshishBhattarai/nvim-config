@@ -103,19 +103,6 @@ vim.api.nvim_create_user_command('RunESLint', runESLint, {})
 vim.api.nvim_create_user_command('RunESLintFix', runESLintFix, {})
 ------------------------------------------------------------------------
 
--- Zig commands
-local function emitTestBin()
-  local file_path = vim.fn.expand('%')
-  local command = 'zig test -femit-bin=zig-out/bin/test ' .. file_path
-  vim.fn.jobstart(command, {
-    stdout_buffered = true,
-    stderr_buffered = true,
-  })
-end
-
-vim.api.nvim_create_user_command('EmitTestBin', emitTestBin, {})
-------------------------------------------------------------------------
-
 -- Editor commands
 vim.g.bot_term_size = '14'
 local bot_term_buf_id = nil
@@ -164,6 +151,19 @@ vim.keymap.set('t', '<A-3>', botTermWinToggle, { silent = true })
 vim.keymap.set('n', '<A-3>', botTermWinToggle, { silent = true })
 vim.keymap.set('n', '<A-2>', botTerm, { silent = true })
 vim.keymap.set('t', '<A-2>', botTerm, { silent = true })
+
+
+-- Running shell commands in split
+local cmd_shell = vim.env.SHELL or "/bin/bash"
+vim.g.shell_split_cmd = 'split'
+local function runShellCommand(opts)
+  vim.cmd(vim.g.shell_split_cmd .. " | terminal " .. cmd_shell .. " -l -c " .. opts.args)
+end
+
+vim.api.nvim_create_user_command("Sh", runShellCommand, {
+  nargs = 1,
+  desc = "Run shell command"
+})
 
 
 -- Neorg git sync
