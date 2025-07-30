@@ -1,36 +1,38 @@
 vim.g.lsp_enable_inlay_hints = false
 
 local servers = {
-  {
-    name = 'typos_lsp',
-    root_dir = function()
-      return vim.loop.cwd()
-    end,
-    settings = {},
-  },
+  -- {
+  --   name = 'typos_lsp',
+  --   root_dir = function()
+  --     return vim.loop.cwd()
+  --   end,
+  --   options = {},
+  -- },
   {
     name = 'zls',
-    settings = {},
+    options = {},
   },
   {
     name = 'ts_ls',
-    settings = {
-      implicitProjectConfiguration = {
-        checkJs = true
+    options = {
+      settings = {
+        implicitProjectConfiguration = {
+          checkJs = true
+        }
       }
     },
   },
   {
     name = 'glsl_analyzer',
-    settings = {},
+    options = {},
   },
   -- {
   --   name = 'tailwindcss',
-  --   settings = {},
+  --   options = {},
   -- },
   {
     name = 'lua_ls',
-    settings = {
+    options = {
       settings = {
         Lua = {
           diagnostics = {
@@ -42,11 +44,11 @@ local servers = {
   },
   {
     name = 'rust_analyzer',
-    settings = {},
+    options = {},
   },
   {
     name = 'clangd',
-    settings = {}
+    options = {}
   }
 }
 
@@ -57,7 +59,7 @@ return {
     local lspconfig = require('lspconfig')
 
     for _, server in ipairs(servers) do
-      lspconfig[server.name].setup(require('coq').lsp_ensure_capabilities(server.settings))
+      lspconfig[server.name].setup(require('coq').lsp_ensure_capabilities(server.options))
     end
 
     -- Lsp keymaps
