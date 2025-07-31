@@ -11,3 +11,13 @@ ui
 theming
 Renderer
 Shaper
+param
+readonly
+const
+linethrough
+keymap
+js
+workspace
+localhost
+http
+url
