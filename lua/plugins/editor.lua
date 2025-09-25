@@ -434,9 +434,10 @@ return {
     },
     config = true,
   },
-  -- {
-  --   "3rd/image.nvim",
-  --   dependencies = { "luarocks.nvim" },
-  --   opts = {}
-  -- },
+  -- for default lsp configs
+  {
+    'neovim/nvim-lspconfig',
+    branch = 'master',
+    lazy = false
+  }
 }
