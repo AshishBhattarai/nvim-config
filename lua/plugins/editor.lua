@@ -256,25 +256,6 @@ return {
     end
   },
   {
-    'ms-jpq/coq_nvim',
-    branch = 'coq',
-    build = 'python3 -m coq deps',
-    dependencies = { 'ms-jpq/coq.artifacts', 'ms-jpq/coq.thirdparty' },
-    init = function()
-      vim.g.coq_settings = {
-        auto_start = 'shut-up',
-        ["clients.snippets.warn"] = { "outdated" },
-        ["display.ghost_text.enabled"] = false,
-        ["keymap.recommended"] = false,
-        ["keymap.manual_complete_insertion_only"] = true,
-        ["keymap.repeat"] = ',',
-        ["clients.buffers.same_filetype"] = true,
-        ["clients.lsp.weight_adjust"] = 1.4,
-        ["completion.sticky_manual"] = true
-      }
-    end
-  },
-  {
     'rcarriga/nvim-dap-ui',
     dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
     config = function()
@@ -439,5 +420,47 @@ return {
     'neovim/nvim-lspconfig',
     branch = 'master',
     lazy = false
+  },
+  {
+    'saghen/blink.cmp',
+    -- optional: provides snippets for the snippet source
+    dependencies = { 'rafamadriz/friendly-snippets' },
+    version = '1.*',
+    opts = {
+      keymap = {
+        preset = 'none',
+        ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+        ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+        -- Tab completion
+        ['<Tab>'] = {
+          function(cmp)
+            local col = vim.fn.col('.') - 1
+            if col <= 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
+              return nil
+            elseif cmp.is_menu_visible() then
+              return cmp.select_and_accept()
+            else
+              return cmp.show()
+            end
+          end,
+          'show_documentation',
+          'hide_documentation',
+          'fallback'
+        },
+        ['<C-h>'] = { 'snippet_forward', },
+        ['<C-j>'] = { 'snippet_backward' },
+      },
+      appearance = {
+        nerd_font_variant = 'mono'
+      },
+      -- (Default) Only show the documentation popup when manually triggered
+      completion = { documentation = { auto_show = false } },
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer' },
+      },
+      fuzzy = { implementation = "prefer_rust_with_warning" },
+      signature = { enabled = true, window = { show_documentation = false } }
+    },
+    opts_extend = { "sources.default" }
   }
 }

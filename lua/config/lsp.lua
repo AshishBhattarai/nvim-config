@@ -47,9 +47,10 @@ local servers = {
 }
 
 -- Setup servers
-local coq = require("coq")
+local blink_cmp = require('blink.cmp')
 for _, server in ipairs(servers) do
-  vim.lsp.config(server.name, coq.lsp_ensure_capabilities(server.options))
+  server.options.capabilities = blink_cmp.get_lsp_capabilities(server.options.capabilities)
+  vim.lsp.config(server.name, server.options)
   vim.lsp.enable(server.name)
 end
 

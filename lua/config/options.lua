@@ -66,3 +66,7 @@ vim.opt.splitright = true
 -- exrc - local vim config
 vim.o.exrc = true
 vim.o.secure = true
+
+-- lsp options
+vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
+vim.opt.shortmess:append("c")
