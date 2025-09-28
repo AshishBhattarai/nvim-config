@@ -380,7 +380,7 @@ return {
       vim.g.undotree_CustomDiffpanelCmd = 'belowright horizontal 24 new'
       vim.g.undotree_SetFocusWhenToggle = 1
       vim.cmd([[
-        let g:undotree_DisabledFiletypes = ['terminal', 'prompt', 'TelescopePrompt']
+        let g:undotree_DisabledFiletypes = ['terminal', 'prompt', 'TelescopePrompt', 'FTerm', 'BotTermX']
       ]])
 
       vim.keymap.set("n", "<leader>ut", ':UndotreeToggle<CR>')

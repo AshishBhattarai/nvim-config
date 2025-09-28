@@ -124,6 +124,7 @@ local function botTerm()
     delete_buffer('BotTermX')
     vim.cmd('bot split | resize ' .. vim.g.bot_term_size .. ' | terminal')
     vim.cmd('setlocal nospell')
+    vim.cmd('set filetype=BotTermX')
     bot_term_buf_id = vim.api.nvim_get_current_buf()
     vim.api.nvim_buf_set_name(bot_term_buf_id, "BotTermX")
   end
