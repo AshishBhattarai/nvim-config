@@ -26,10 +26,3 @@ vim.keymap.set('x', '#', function()
   vim.opt.hlsearch = true
   vim.cmd('normal! `<')    -- jump back to start of selection
 end, { noremap = true, silent = true })
-
--- DELETE always into "d register
-vim.keymap.set({'n','v'}, 'D', '"dD', { noremap = true })
-vim.keymap.set({'n','v'}, 'x', '"dx', { noremap = true })
-vim.keymap.set({'n','v'}, 'X', '"dX', { noremap = true })
-vim.keymap.set({'n','v'}, 'c', '"dc', { noremap = true })
-vim.keymap.set({'n','v'}, 'C', '"dC', { noremap = true })

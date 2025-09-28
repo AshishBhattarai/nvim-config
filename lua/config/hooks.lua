@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "lua", "javascript", "typescript", "javascriptreact", "typescriptreact", "neorg", "zig" },
+  pattern = { "lua", "javascript", "typescript", "javascriptreact", "typescriptreact", "neorg" },
   callback = function()
     if vim.bo.modifiable and not vim.bo.readonly then
       vim.opt_local.spell = true
