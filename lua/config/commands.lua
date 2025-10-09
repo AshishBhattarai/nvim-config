@@ -209,13 +209,28 @@ vim.api.nvim_create_user_command('NeorgSync', function()
     end)
   end
 
+  local function git_push()
+    git_command({ "push", "origin", "main" }, function(push_result)
+      if string.find(push_result.stdout, "Everything up-to-date") then
+        vim.schedule(function()
+          vim.notify("Everything up-to-date", vim.log.levels.INFO)
+        end)
+      else
+        vim.schedule(function()
+          vim.notify("Neorg notes pushed successfully!", vim.log.levels.INFO)
+        end)
+      end
+    end)
+  end
+
   -- Step 2: Check if there are any changes
   git_command({ "status", "--porcelain" }, function(status_result)
     if status_result.stdout == "" then
       vim.schedule(function()
         vim.notify("No changes to commit.", vim.log.levels.INFO)
       end)
-      git_pull_rebase()
+      -- rebase and then push
+      git_pull_rebase(git_push)
     else
       git_command({ "add", "." }, function()
         git_command({ "commit", "-m", "syncing notes " .. datetime }, function(commit_result)
@@ -226,20 +241,7 @@ vim.api.nvim_create_user_command('NeorgSync', function()
             end)
           end
           -- rebase and then push
-          git_pull_rebase(function()
-            -- Call push anyway if we get to this point
-            git_command({ "push", "origin", "main" }, function(push_result)
-              if string.find(push_result.stdout, "Everything up-to-date") then
-                vim.schedule(function()
-                  vim.notify("Everything up-to-date", vim.log.levels.INFO)
-                end)
-              else
-                vim.schedule(function()
-                  vim.notify("Neorg notes pushed successfully!", vim.log.levels.INFO)
-                end)
-              end
-            end)
-          end)
+          git_pull_rebase(git_push)
         end)
       end)
     end
