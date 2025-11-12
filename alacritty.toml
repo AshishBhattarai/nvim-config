@@ -19,3 +19,28 @@ style = "Regular"
 
 [window]
 option_as_alt = "OnlyLeft"
+
+[[keyboard.bindings]]
+key = "+"
+mods = "Control|Shift"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "_"
+mods = "Control|Shift"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "("
+mods = "Control|Shift"
+action = "ResetFontSize"
+
+[[keyboard.bindings]]
+key = "Equals"
+mods = "Control"
+action = "None"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "None"
