@@ -9,6 +9,10 @@ local servers = {
     },
   },
   {
+    name = "clangd",
+    options = {},
+  },
+  {
     name = "ts_ls",
     options = {
       settings = {

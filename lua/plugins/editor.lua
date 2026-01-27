@@ -224,7 +224,7 @@ return {
   },
   {
     'f-person/git-blame.nvim',
-    branch = 'master',
+    branch = 'main',
     config = function()
       require('gitblame').setup()
     end
@@ -387,6 +387,7 @@ return {
     "nvim-neorg/neorg",
     lazy = false,
     branch = "main",
+    dependencies = { "nvim-neorg/tree-sitter-norg" },
     opts = {
       load = {
         ["core.defaults"] = {},
