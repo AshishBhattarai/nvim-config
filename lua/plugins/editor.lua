@@ -391,7 +391,12 @@ return {
     opts = {
       load = {
         ["core.defaults"] = {},
-        ["core.journal"] = {},
+        ["core.journal"] = {
+          config = {
+            -- fixes crash with journal toc update
+            use_fancy_title = false,
+          },
+        },
         ["core.qol.toc"] = {},
         ["core.concealer"] = {
           config = {
