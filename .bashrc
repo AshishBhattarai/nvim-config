@@ -1,46 +1,53 @@
-#
 # ~/.bashrc
-#
 
-# If not running interactively, don't do anything
+# Exit if not interactive
 [[ $- != *i* ]] && return
 
-# Avoid duplicate entries
+# History settings
 HISTCONTROL=ignoredups:erasedups
-
-# Increase limit
 HISTSIZE=50000
 HISTFILESIZE=100000
-
-# Append history instead of overwriting
 shopt -s histappend
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
-
-source $HOME/Documents/deps/deps.sh
-
-git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+# Helpers
+add_to_path() {
+  case ":$PATH:" in
+    *":$1:"*) ;;
+    *) PATH="$1:$PATH" ;;
+  esac
 }
 
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && . "$NVM_DIR/bash_completion"
+
+# Optional local deps
+[[ -f "$HOME/Documents/deps/deps.sh" ]] && source "$HOME/Documents/deps/deps.sh"
+
+# Git branch for prompt
+git_branch() {
+  b=$(git symbolic-ref --short HEAD 2>/dev/null) && printf "(%s)" "$b"
+}
+
+# Prompt
+PS1='\[\e[32m\][\[\e[33m\]\W\[\e[32m\]]\[\033[38;5;11m\]$(git_branch)\[\e[32m\]\$ \[\e[0m\]'
+
+# Custom env vars
+export JS_DEBUG_PATH="$HOME/Documents/deps/js-debug/dist/src/dapDebugServer.js"
+export NEORG_NOTES_REPO="$HOME/Documents/notes/"
+
+# PNPM
+export PNPM_HOME="$HOME/.local/share/pnpm"
+add_to_path "$PNPM_HOME"
+
+# fzf
+command -v fzf >/dev/null 2>&1 && eval "$(fzf --bash)"
+
+# Local bin
+add_to_path "$HOME/.local/bin"
+
+# Aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-PS1="\[\e[m\]\[\e[32m\][\[\e[m\]\[\e[33m\]\W\[\e[m\]\[\e[32m\]]\[\e[m\]\[\e[32m\]\[\033[38;5;11m\]\$(git_branch)\[\e[32m\]\$\[\e[m\] "
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export JS_DEBUG_PATH="/home/ashish/Documents/deps/js-debug/dist/src/dapDebugServer.js"
-export NEORG_NOTES_REPO="/home/ashish/Documents/notes/"
-
-# pnpm
-export PNPM_HOME="/home/ashish/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-eval "$(fzf --bash)"
-
-export PATH="$PATH:/home/ashish/.local/bin"
+alias codex='firejail codex'
