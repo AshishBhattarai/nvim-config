@@ -182,6 +182,18 @@ return {
       view = {
         preserve_window_proportions = true,
       },
+      filesystem_watchers = {
+        enable = true,
+        debounce_delay = 50,
+        ignore_dirs = {
+          "/.ccls-cache",
+          "/build",
+          "/node_modules",
+          "/target",
+          "/test-results",
+          "/.zig-cache"
+        },
+      },
     },
     config = function(_, opts)
       require('nvim-tree').setup(opts)
