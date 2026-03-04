@@ -27,7 +27,10 @@ export NVM_DIR="$HOME/.nvm"
 
 # Git branch for prompt
 git_branch() {
-  b=$(git symbolic-ref --short HEAD 2>/dev/null) && printf "(%s)" "$b"
+  local b
+  b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) &&
+    printf '(%s)' "$b" ||
+    git branch --no-color 2>/dev/null | sed -n 's/^\* \(.*\)$/\1/p'
 }
 
 # Prompt
