@@ -28,6 +28,10 @@ local servers = {
     },
   },
   {
+    name = 'biome',
+    options = {},
+  },
+  {
     name = "glsl_analyzer",
     options = {
       on_attach = function(client, _)

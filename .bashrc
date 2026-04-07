@@ -27,14 +27,32 @@ export NVM_DIR="$HOME/.nvm"
 
 # Git branch for prompt
 git_branch() {
-  local b
-  b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) &&
-    printf '(%s)' "$b" ||
-    git branch --no-color 2>/dev/null | sed -n 's/^\* \(.*\)$/\1/p'
+  local b state gitdir
+
+  # Get git dir
+  gitdir=$(git rev-parse --git-dir 2>/dev/null) || return
+
+  # Branch or commit
+  b=$(git symbolic-ref --quiet --short HEAD 2>/dev/null) || b=$(git rev-parse --short HEAD 2>/dev/null) || return
+
+  # Detect state
+  if [[ -d "$gitdir/rebase-merge" || -d "$gitdir/rebase-apply" ]]; then
+    state="|rebase"
+  elif [[ -f "$gitdir/MERGE_HEAD" ]]; then
+    state="|merge"
+  elif [[ -f "$gitdir/CHERRY_PICK_HEAD" ]]; then
+    state="|cherry-pick"
+  elif [[ -f "$gitdir/REVERT_HEAD" ]]; then
+    state="|revert"
+  elif [[ -f "$gitdir/BISECT_LOG" ]]; then
+    state="|bisect"
+  fi
+
+  printf '(%s%s)' "$b" "$state"
 }
 
 # Prompt
-PS1='\[\e[32m\][\[\e[33m\]\W\[\e[32m\]]\[\033[38;5;11m\]$(git_branch)\[\e[32m\]\$ \[\e[0m\]'
+PS1='\[\033[32m\][\[\033[33m\]\W\[\033[32m\]]\[\033[38;5;11m\]$(git_branch)\[\033[32m\]\$ \[\033[0m\]'
 
 # Custom env vars
 export JS_DEBUG_PATH="$HOME/Documents/deps/js-debug/dist/src/dapDebugServer.js"
