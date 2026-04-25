@@ -8,13 +8,15 @@ This repository contains my personal Neovim configuration.
 
 - **[gruvbox-material](https://github.com/sainnhe/gruvbox-material):** A retro color scheme that offers readability with a warm palette.
 - **[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim):** Fuzzy finder and search plugin.
-- **[Comment.nvim](https://github.com/numToStr/Comment.nvim):** Smart and powerful commenting plugin.
+- **[mini.comment](https://github.com/nvim-mini/mini.comment):** Minimal commenting plugin with `gc`/`gcc` mappings.
 - **[auto-session](https://github.com/rmagatti/auto-session):** Automated session management.
-- **[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter):** Better syntax highlighting using tree-sitter.
+- **[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter):** Parser management, queries, and Tree-sitter indentation support.
+- **[nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects):** Tree-sitter textobjects for movement and selection.
 - **[nvim-surround](https://github.com/kylechui/nvim-surround):** Surround text objects for easy editing.
-- **[nvim-ufo](https://github.com/kevinhwang91/nvim-ufo):** Code folding based on LSP and Treesitter.
+- **[nvim-ufo](https://github.com/kevinhwang91/nvim-ufo):** Folding powered by Tree-sitter with indent fallback.
 - **[nvim-tree](https://github.com/nvim-tree/nvim-tree.lua):** File explorer tree for better project navigation.
-- **[Fterm](https://github.com/numToStr/FTerm.nvim):** Floating terminal integration.
+- **[FTerm.nvim](https://github.com/numToStr/FTerm.nvim):** Floating terminal integration.
+- **[neorg](https://github.com/nvim-neorg/neorg):** Notes and organization inside Neovim.
 
 ### UI Enhancements
 
@@ -29,7 +31,7 @@ This repository contains my personal Neovim configuration.
 ### LSP & Autocompletion
 
 - **[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig):** Quick and easy LSP setup.
-- **[coq_nvim](https://github.com/ms-jpq/coq_nvim):** Fast autocompletion plugin.
+- **[blink.cmp](https://github.com/Saghen/blink.cmp):** Completion UI and LSP/snippet completion sources.
 
 ### Debugging
 

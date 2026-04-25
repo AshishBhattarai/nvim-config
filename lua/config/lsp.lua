@@ -13,6 +13,10 @@ local servers = {
     options = {},
   },
   {
+    name = 'biome',
+    options = {}
+  },
+  {
     name = "ts_ls",
     options = {
       settings = {
@@ -102,4 +106,115 @@ vim.api.nvim_create_autocmd("LspAttach", {
       opts
     )
   end,
+})
+
+
+-- Neovim 0.12 removed the old LSP user commands; add small compatibility wrappers.
+local function get_lsp_config_names()
+  local config_names = {}
+  local configs = vim.lsp.config and vim.lsp.config._configs or {}
+
+  for name, _ in pairs(configs) do
+    table.insert(config_names, name)
+  end
+
+  table.sort(config_names)
+  return config_names
+end
+
+local function lsp_names_for_current_buffer()
+  local filetype = vim.bo.filetype
+  local names = {}
+
+  for _, name in ipairs(get_lsp_config_names()) do
+    local ok, config = pcall(function()
+      return vim.lsp.config[name]
+    end)
+    local filetypes = ok and config and config.filetypes or nil
+
+    if not filetypes or vim.tbl_contains(filetypes, filetype) then
+      table.insert(names, name)
+    end
+  end
+
+  return names
+end
+
+local function parse_lsp_command_names(arg)
+  local trimmed = vim.trim(arg or "")
+  if trimmed == "" then
+    return lsp_names_for_current_buffer()
+  end
+
+  return vim.split(trimmed, "%s+", { trimempty = true })
+end
+
+local function lsp_name_completion(arg_lead)
+  local matches = {}
+  for _, name in ipairs(get_lsp_config_names()) do
+    if arg_lead == "" or vim.startswith(name, arg_lead) then
+      table.insert(matches, name)
+    end
+  end
+  return matches
+end
+
+vim.api.nvim_create_user_command("LspStart", function(opts)
+  local names = parse_lsp_command_names(opts.args)
+  if vim.tbl_isempty(names) then
+    vim.notify("No matching LSP configs for the current buffer", vim.log.levels.WARN)
+    return
+  end
+
+  vim.lsp.enable(names, true)
+end, {
+  nargs = "*",
+  complete = lsp_name_completion,
+  desc = "Compatibility wrapper for vim.lsp.enable()",
+})
+
+vim.api.nvim_create_user_command("LspStop", function(opts)
+  local names = parse_lsp_command_names(opts.args)
+  if vim.tbl_isempty(names) then
+    local clients = vim.lsp.get_clients({ bufnr = 0 })
+    if vim.tbl_isempty(clients) then
+      vim.notify("No active LSP clients for the current buffer", vim.log.levels.WARN)
+      return
+    end
+
+    for _, client in ipairs(clients) do
+      client:stop(opts.bang and true or client.exit_timeout)
+    end
+    return
+  end
+
+  vim.lsp.enable(names, false)
+end, {
+  bang = true,
+  nargs = "*",
+  complete = lsp_name_completion,
+  desc = "Compatibility wrapper for stopping LSP clients/configs",
+})
+
+vim.api.nvim_create_user_command("LspRestart", function(opts)
+  local names = parse_lsp_command_names(opts.args)
+  if vim.tbl_isempty(names) then
+    vim.notify("No matching LSP configs for the current buffer", vim.log.levels.WARN)
+    return
+  end
+
+  vim.lsp.enable(names, false)
+  vim.defer_fn(function()
+    vim.lsp.enable(names, true)
+  end, 100)
+end, {
+  nargs = "*",
+  complete = lsp_name_completion,
+  desc = "Compatibility wrapper for restarting LSP clients/configs",
+})
+
+vim.api.nvim_create_user_command("LspInfo", function()
+  vim.cmd("checkhealth vim.lsp")
+end, {
+  desc = "Compatibility wrapper for Neovim LSP health output",
 })

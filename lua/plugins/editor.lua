@@ -77,11 +77,11 @@ return {
     end
   },
   {
-    'numToStr/Comment.nvim',
-    branch = 'master',
+    'nvim-mini/mini.comment',
+    branch = 'main',
     config = function()
-      require("Comment").setup()
-    end
+      require('mini.comment').setup()
+    end,
   },
   {
     'rmagatti/auto-session',
@@ -96,41 +96,93 @@ return {
   },
   {
     'nvim-treesitter/nvim-treesitter',
-    branch = 'master',
+    branch = 'main',
+    lazy = false,
     build = ':TSUpdate',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects'
-    },
-    opts = {
-      highlight = {
-        enable = true
-      },
-      textobjects = {
-        move = {
-          enable = true,
-          set_jumps = true, -- set jumps in the jumplist
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
-          },
-          goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
-          },
-          goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
-          },
-        }
-      }
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
+    config = function()
+      local nvim_treesitter = require('nvim-treesitter')
+
+      nvim_treesitter.setup({
+        install_dir = vim.fn.stdpath('data') .. '/site',
+      })
+
+      nvim_treesitter.install({
+        'bash',
+        'c',
+        'cpp',
+        'javascript',
+        'json',
+        'lua',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'toml',
+        'tsx',
+        'typescript',
+        'vim',
+        'vimdoc',
+        'yaml',
+        'zig',
+      })
     end
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = 'main',
+    lazy = false,
+    config = function()
+      require('nvim-treesitter-textobjects').setup({
+        select = {
+          lookahead = true,
+        },
+        move = {
+          set_jumps = true,
+        },
+      })
+
+      local move = require('nvim-treesitter-textobjects.move')
+      local select = require('nvim-treesitter-textobjects.select')
+
+      for _, mode in ipairs({ 'x', 'o' }) do
+        vim.keymap.set(mode, 'af', function()
+          select.select_textobject('@function.outer', 'textobjects', mode)
+        end)
+        vim.keymap.set(mode, 'if', function()
+          select.select_textobject('@function.inner', 'textobjects', mode)
+        end)
+        vim.keymap.set(mode, 'ac', function()
+          select.select_textobject('@class.outer', 'textobjects', mode)
+        end)
+        vim.keymap.set(mode, 'ic', function()
+          select.select_textobject('@class.inner', 'textobjects', mode)
+        end)
+      end
+
+      vim.keymap.set({ 'n', 'x', 'o' }, ']m', function()
+        move.goto_next_start('@function.outer', 'textobjects')
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, ']]', function()
+        move.goto_next_start('@class.outer', 'textobjects')
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, ']M', function()
+        move.goto_next_end('@function.outer', 'textobjects')
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, '][', function()
+        move.goto_next_end('@class.outer', 'textobjects')
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, '[m', function()
+        move.goto_previous_start('@function.outer', 'textobjects')
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, '[[', function()
+        move.goto_previous_start('@class.outer', 'textobjects')
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, '[M', function()
+        move.goto_previous_end('@function.outer', 'textobjects')
+      end)
+      vim.keymap.set({ 'n', 'x', 'o' }, '[]', function()
+        move.goto_previous_end('@class.outer', 'textobjects')
+      end)
+    end,
   },
   {
     "kylechui/nvim-surround",
@@ -184,7 +236,7 @@ return {
       },
       filesystem_watchers = {
         enable = true,
-        debounce_delay = 50,
+        debounce_delay = 300,
         ignore_dirs = {
           "/.ccls-cache",
           "/build",
