@@ -17,6 +17,10 @@ local servers = {
     options = {}
   },
   {
+    name = 'codebook',
+    options = {}
+  },
+  {
     name = "ts_ls",
     options = {
       settings = {
