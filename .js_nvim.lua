@@ -1,5 +1,5 @@
 -- trailing space is required
-vim.g.js_test_runner = 'pnpm jest '
+vim.g.js_test_runner = 'pnpm run test --runTestsByPath '
 vim.g.js_format_runner = 'pnpm prettier '
 vim.g.js_lint_runner = 'pnpm eslint '
 
@@ -20,6 +20,12 @@ dap.configurations.typescript = {
     runtimeExecutable = "ts-node",
     sourceMaps = true,
     skipFiles = { "<node_internals>/**" },
+    sourceMapPathOverrides = {
+      ["webpack:///./*"] = "${webRoot}/*",
+      ["webpack:///src/*"] = "${webRoot}/src/*",
+      ["rspack:///./*"] = "${webRoot}/*",
+      ["rspack:///src/*"] = "${webRoot}/src/*",
+    },
   },
   {
     type = "pwa-chrome",
@@ -30,6 +36,12 @@ dap.configurations.typescript = {
     sourceMaps = true,
     port = 9222,
     skipFiles = { "<node_internals>/**", "node_modules/**" },
+    sourceMapPathOverrides = {
+      ["webpack:///./*"] = "${webRoot}/*",
+      ["webpack:///src/*"] = "${webRoot}/src/*",
+      ["rspack:///./*"] = "${webRoot}/*",
+      ["rspack:///src/*"] = "${webRoot}/src/*",
+    },
   },
   {
     type = "pwa-chrome",
@@ -41,6 +53,12 @@ dap.configurations.typescript = {
     sourceMaps = true,
     port = 9222,
     skipFiles = { "<node_internals>/**", "node_modules/**" },
+    sourceMapPathOverrides = {
+      ["webpack:///./*"] = "${webRoot}/*",
+      ["webpack:///src/*"] = "${webRoot}/src/*",
+      ["rspack:///./*"] = "${webRoot}/*",
+      ["rspack:///src/*"] = "${webRoot}/src/*",
+    },
   }
 };
 dap.configurations.typescriptreact = dap.configurations.typescript;
