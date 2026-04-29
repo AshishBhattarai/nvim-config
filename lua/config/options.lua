@@ -67,6 +67,9 @@ vim.opt.splitright = true
 vim.o.exrc = true
 vim.o.secure = true
 
+-- session options
+vim.o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize,terminal,localoptions"
+
 -- lsp options
 vim.opt.completeopt = { "menuone", "noinsert", "noselect" }
 vim.opt.shortmess:append("c")

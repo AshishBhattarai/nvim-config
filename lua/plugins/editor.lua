@@ -87,8 +87,8 @@ return {
     'rmagatti/auto-session',
     branch = 'main',
     opts = {
-      auto_save_enabled = true,
-      auto_restore_enabled = true,
+      auto_save = true,
+      auto_restore = true,
     },
     config = function(_, opts)
       require("auto-session").setup(opts)
