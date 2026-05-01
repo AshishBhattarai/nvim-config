@@ -5,7 +5,6 @@ return {
     branch = 'master',
     lazy = false,
     init = function()
-      vim.opt.termguicolors = true
       vim.g.gruvbox_material_background = 'hard'
       vim.g.gruvbox_material_enable_italic = true
       -- vim.g.gruvbox_material_better_performance = 1

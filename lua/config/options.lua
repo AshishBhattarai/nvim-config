@@ -38,7 +38,8 @@ vim.o.foldenable = true
 vim.opt.autowriteall = true
 vim.opt.autoread = true
 
--- Colorcolumn
+-- Color
+vim.opt.termguicolors = true
 vim.opt.colorcolumn = '120'
 vim.cmd('highlight ColorColumn ctermbg=8 guibg=lightorange')
 
