@@ -12,17 +12,17 @@ vim.keymap.set('n', '<C-k>', ':cp<CR>', { silent = true })
 -- Normal mode: use "h register for highlight
 vim.keymap.set('n', '#', function()
   local word = vim.fn.expand('<cword>')
-  vim.fn.setreg('h', word) -- save in h register
-  vim.fn.setreg('/', word) -- set as search
+  vim.fn.setreg('h', word)                                 -- save in h register
+  vim.fn.setreg('/', '\\V' .. vim.fn.escape(word, '\\'))   -- set literal search
   vim.opt.hlsearch = true
 end, { noremap = true, silent = true })
 
 -- Visual mode: use "h register for highlight
 vim.keymap.set('x', '#', function()
-  -- yank into "h register (not default)
-  vim.cmd('normal! "hy')
+  vim.cmd('normal! "hy')   -- yank into "h register (not default)
   local text = vim.fn.getreg('h')
-  vim.fn.setreg('/', text) -- set as search
+  text = text:gsub('\n', '\\n')
+  vim.fn.setreg('/', '\\V' .. vim.fn.escape(text, '\\'))   -- set literal search
   vim.opt.hlsearch = true
-  vim.cmd('normal! `<')    -- jump back to start of selection
+  vim.cmd('normal! `<')                                    -- jump back to start of selection
 end, { noremap = true, silent = true })
