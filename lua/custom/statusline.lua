@@ -46,14 +46,18 @@ local modes = {
 }
 
 function _G.statusline()
-  local filename = vim.fn.expand("%:t")
+  local winid = vim.g.statusline_winid
+  local filename = vim.fn.fnamemodify(
+    vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(winid)),
+    ":t"
+  )
   if filename == "" then
     filename = "[No Name]"
   end
 
   local encoding = vim.bo.fileencoding ~= "" and vim.bo.fileencoding or vim.o.encoding
   local filetype = vim.bo.filetype ~= "" and vim.bo.filetype or "no ft"
-  local active = vim.g.statusline_winid == vim.api.nvim_get_current_win()
+  local active = winid == vim.api.nvim_get_current_win()
 
   if not active then
     return table.concat({
