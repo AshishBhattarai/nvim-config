@@ -7,7 +7,6 @@ local function delete_buffer(name)
   end
 end
 
-
 -- JS tool commands
 ------------------------------------------------------------------------
 vim.g.js_test_runner = 'pnpm jest '
@@ -165,7 +164,6 @@ vim.api.nvim_create_user_command("Sh", runShellCommand, {
   nargs = 1,
   desc = "Run shell command"
 })
-
 
 -- Neorg git sync
 vim.api.nvim_create_user_command('NeorgSync', function()

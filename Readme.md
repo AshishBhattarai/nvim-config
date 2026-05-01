@@ -20,7 +20,6 @@ This repository contains my personal Neovim configuration.
 
 ### UI Enhancements
 
-- **[lightline](https://github.com/itchyny/lightline.vim):** Lightweight statusline.
 - **[indent-blankline.nvim](https://github.com/lukas-reineke/indent-blankline.nvim):** Indentation guides.
 
 ### Git Integration

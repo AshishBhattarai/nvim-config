@@ -13,19 +13,6 @@ return {
     end
   },
   {
-    'ayu-theme/ayu-vim',
-    branch = 'master',
-  },
-  {
-    'itchyny/lightline.vim',
-    branch = 'master',
-    init = function()
-      vim.g.lightline = {
-        colorscheme = 'ayu_dark'
-      }
-    end
-  },
-  {
     'nvim-telescope/telescope.nvim',
     branch = 'master',
     dependencies = { 'nvim-lua/plenary.nvim',
