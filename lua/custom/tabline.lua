@@ -3,8 +3,8 @@ local tab_colors = {
   panel     = "#14191f",
   fg        = "#e6e1cf",
   inactive  = "#3e4b59",
-  accent    = "#e6b673",
-  accent_fg = "#14191f",
+  accent    = "#e0af68",
+  accent_fg = "#1d2021",
 }
 
 vim.api.nvim_set_hl(0, "TabLine", {

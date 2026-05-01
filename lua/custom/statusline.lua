@@ -3,9 +3,9 @@ local colors = {
   muted  = "#3e4b59",
   panel  = "#14191f",
   bg     = "#0f1419",
-  amber  = "#f2ae49",
+  amber  = "#d8a657",
   red    = "#f07178",
-  yellow = "#ffee99",
+  yellow = "#e0af68",
   blue   = "#36a3d9",
   green  = "#b8cc52",
 }
