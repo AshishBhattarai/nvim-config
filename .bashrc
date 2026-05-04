@@ -54,6 +54,8 @@ git_branch() {
 # Prompt
 PS1='\[\033[32m\][\[\033[33m\]\W\[\033[32m\]]\[\033[38;5;11m\]$(git_branch)\[\033[32m\]\$ \[\033[0m\]'
 
+export EDITOR=nvim
+export VISUAL=nvim
 # Custom env vars
 export JS_DEBUG_PATH="$HOME/Documents/deps/js-debug/dist/src/dapDebugServer.js"
 export NEORG_NOTES_REPO="$HOME/Documents/notes/"
