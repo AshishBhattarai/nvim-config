@@ -209,7 +209,9 @@ vim.api.nvim_create_user_command('NeorgSync', function()
 
   local function git_push()
     git_command({ "push", "origin", "main" }, function(push_result)
-      if string.find(push_result.stdout, "Everything up-to-date") then
+      -- push origin return "Everything up-to-date" as stderr
+      local message = (push_result.stdout or "") .. (push_result.stderr or "");
+      if string.find(message, "Everything up%-to%-date") then
         vim.schedule(function()
           vim.notify("Everything up-to-date", vim.log.levels.INFO)
         end)
