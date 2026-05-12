@@ -60,10 +60,6 @@ export VISUAL=nvim
 export JS_DEBUG_PATH="$HOME/Documents/deps/js-debug/dist/src/dapDebugServer.js"
 export NEORG_NOTES_REPO="$HOME/Documents/notes/"
 
-# PNPM
-export PNPM_HOME="$HOME/.local/share/pnpm"
-add_to_path "$PNPM_HOME"
-
 # fzf
 command -v fzf >/dev/null 2>&1 && eval "$(fzf --bash)"
 
@@ -74,3 +70,4 @@ add_to_path "$HOME/.local/bin"
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias codex='firejail codex'
+alias firesh='firejail --profile=$HOME/.config/firejail/bash.profile bash'
