@@ -13,10 +13,6 @@ local servers = {
     options = {},
   },
   {
-    name = 'biome',
-    options = {}
-  },
-  {
     name = 'codebook',
     options = {}
   },
@@ -29,9 +25,8 @@ local servers = {
         },
       },
       on_attach = function(client, bufnr)
-        -- Disable built-in formatter (use Prettier instead)
+        -- Disable built-in formatter
         client.server_capabilities.documentFormattingProvider = false
-        vim.keymap.set("n", "<A-f>", ":RunPrettier<CR>", { noremap = true, silent = true, buffer = bufnr })
       end,
     },
   },
