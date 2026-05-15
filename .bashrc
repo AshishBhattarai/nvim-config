@@ -70,4 +70,8 @@ add_to_path "$HOME/.local/bin"
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias codex='firejail codex'
-alias firesh='firejail --profile=$HOME/.config/firejail/bash.profile bash'
+
+firesh() {
+  firejail --profile="$HOME/.config/firejail/bash.profile" "$@"
+}
+
