@@ -4,27 +4,27 @@ vim.g.lsp_enable_inlay_hints = false
 local servers = {
   {
     name = "zls",
-    options = {
+    config = {
       filetypes = { 'zig' }
     },
   },
   {
     name = "clangd",
-    options = {},
+    config = {},
   },
   {
     name = 'codebook',
-    options = {}
+    config = {}
   },
   {
     name = "ts_ls",
-    options = {
+    config = {
       settings = {
         implicitProjectConfiguration = {
           checkJs = true,
         },
       },
-      on_attach = function(client, bufnr)
+      on_attach = function(client, _)
         -- Disable built-in formatter
         client.server_capabilities.documentFormattingProvider = false
       end,
@@ -32,11 +32,11 @@ local servers = {
   },
   {
     name = 'biome',
-    options = {},
+    config = {},
   },
   {
     name = "glsl_analyzer",
-    options = {
+    config = {
       on_attach = function(client, _)
         -- Patch buggy cancel_request
         client.cancel_request = function() end
@@ -45,7 +45,7 @@ local servers = {
   },
   {
     name = "lua_ls",
-    options = {
+    config = {
       settings = {
         Lua = {
           diagnostics = {
@@ -60,8 +60,8 @@ local servers = {
 -- Setup servers
 local blink_cmp = require('blink.cmp')
 for _, server in ipairs(servers) do
-  server.options.capabilities = blink_cmp.get_lsp_capabilities(server.options.capabilities)
-  vim.lsp.config(server.name, server.options)
+  server.config.capabilities = blink_cmp.get_lsp_capabilities(server.config.capabilities)
+  vim.lsp.config(server.name, server.config)
   vim.lsp.enable(server.name)
 end
 
@@ -90,10 +90,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
     vim.keymap.set("n", "gn", vim.lsp.buf.rename, opts)
     vim.keymap.set({ "n", "v" }, "ca", vim.lsp.buf.code_action, opts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-
-    if client.server_capabilities.documentFormattingProvider then
-      vim.keymap.set("n", "<A-f>", vim.lsp.buf.format, opts)
-    end
+    vim.keymap.set("n", "<A-f>", vim.lsp.buf.format, opts)
 
     -- Split jumps
     vim.keymap.set("n", "<leader>s", ":split | lua vim.lsp.buf.definition()<CR>", opts)
